@@ -7,6 +7,9 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
+  this.route('subject');
+  this.route('data-controller');
+  this.route('authority');
 });
 
 export default Router;

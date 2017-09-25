@@ -1,0 +1,10 @@
+Subject page
+
+<ul>
+{{#each model as |consent|}}
+  <li>
+    I give permission to {{await consent.givenTo.name}} to use my {{consent.consentFor.label}} {{consent.purpose.label}} : {{input type="checkbox" checked=consent.isGiven change=(action "toggleConsent" consent)}}
+  </li>
+{{/each}}
+</ul>
+{{outlet}}
