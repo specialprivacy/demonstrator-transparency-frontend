@@ -8,7 +8,7 @@ export default Model.extend({
   // This is what mu-cl-resources uses to search on, and how the model will be presented while editing relationships.
   stringRep: Ember.computed.collect.apply(this,['id','birthDate', 'name']),
 
-  birthDate: attr('string'),
+  birthDate: attr('date'),
   name: attr('string'),
   consents: hasMany('consent', {inverse: null })
 });
