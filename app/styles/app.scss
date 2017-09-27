@@ -3,5 +3,7 @@ $primary: "cyan";
 $color-cyan: map-merge($color-cyan, ('contrastDefaultColor':  $light-contrast-color));
 @import "ember-paper";
 @import "ember-power-calendar";
-@import "custom-ember-power-calendar-design";
+.ember-power-calendar {
+    @include ember-power-calendar($cell-size: 30px);
+}
 
