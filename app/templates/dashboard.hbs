@@ -1,0 +1,102 @@
+<div class="layout-row layout-xs-column">
+  <div class="layout-column hidden-xs hidden-sm flex-25">
+    {{#paper-card as |card|}}
+      {{#paper-list}}
+        {{#paper-subheader}}General{{/paper-subheader}}
+
+        {{#paper-item onClick=(action "action1") as |controls|}}
+          {{paper-icon "description" primary=true}}
+          <p>Review consent</p>
+        {{/paper-item}}
+
+        {{#paper-item onClick=(action "action1") as |controls|}}
+          {{paper-icon "account-balance" primary=true}}
+          <p>Privacy policy</p>
+        {{/paper-item}}
+
+
+        {{paper-divider}}
+
+        {{#paper-subheader}}Processing context{{/paper-subheader}}
+        {{#each processingContexts as |item|}}
+          {{#paper-item as |controls|}}
+            {{controls.checkbox value=item.enabled onChange=(action (mut item.enabled)) primary=true}}
+            <p>{{item.name}}</p>
+            <div class="md-secondary-container">
+              {{#controls.button secondary=true iconButton=true onClick=(action (mut item.enabled))}}
+                {{paper-icon item.icon}}
+                {{#if item.tooltip}}
+                  {{#paper-tooltip}}
+                    {{item.tooltip}}
+                  {{/paper-tooltip}}
+                {{/if}}
+              {{/controls.button}}
+            </div>
+          {{/paper-item}}
+        {{/each}}
+
+        {{paper-divider}}
+        {{#paper-subheader}}Data type{{/paper-subheader}}
+        {{#each dataTypes as |item|}}
+          {{#paper-item as |controls|}}
+            {{controls.checkbox value=item.enabled onChange=(action (mut item.enabled)) primary=true}}
+            <p>{{item.name}}</p>
+            <div class="md-secondary-container">
+              {{#controls.button secondary=true iconButton=true onClick=(action (mut item.enabled))}}
+                {{paper-icon item.icon}}
+                {{#if item.tooltip}}
+                  {{#paper-tooltip}}
+                    {{item.tooltip}}
+                  {{/paper-tooltip}}
+                {{/if}}
+              {{/controls.button}}
+            </div>
+          {{/paper-item}}
+        {{/each}}
+
+        {{paper-divider}}
+        {{#paper-subheader}}Time range{{/paper-subheader}}
+        {{#paper-item}}
+          {{#power-calendar-range
+          class="demo-range-calendar-with-pretty-range-ends-yo"
+          center=center selected=range onSelect=(action (mut range) value="moment") as |calendar|}}
+            {{calendar.nav}}
+            {{calendar.days}}
+          {{/power-calendar-range}}
+        {{/paper-item}}
+
+      {{/paper-list}}
+    {{/paper-card}}
+
+  </div>
+
+  <div class="layout-column flex-50">
+    {{#paper-card as |card|}}
+      {{#card.title as |title|}}
+        {{#title.text as |text|}}
+          {{#text.headline}}Card with image{{/text.headline}}
+          {{#text.subhead}}Large{{/text.subhead}}
+        {{/title.text}}
+        {{title.media size="lg" src="tomster-9918e85a7f1a28c78b484c34cbe88579.png" alt="Tomster" title="Tomster"}}
+      {{/card.title}}
+      {{#card.actions}}
+        {{#paper-button}}Action 1{{/paper-button}}
+        {{#paper-button}}Action 2{{/paper-button}}
+      {{/card.actions}}
+    {{/paper-card}}
+  </div>
+
+  <div class="layout-column hidden-xs hidden-sm flex-25">
+    {{#paper-card as |card|}}
+      {{#paper-subheader}}Logo{{/paper-subheader}}
+      Logo
+      {{#paper-subheader}}Name{{/paper-subheader}}
+      Controller
+      {{#paper-subheader}}Address{{/paper-subheader}}
+      Ernst-Reuter-Platz 7
+      10587 Berlin
+      {{#paper-subheader}}Email address{{/paper-subheader}}
+      <a href="mailto:support@example.com">support@example.com</a>
+    {{/paper-card}}
+  </div>
+</div>
