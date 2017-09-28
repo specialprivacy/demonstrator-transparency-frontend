@@ -95,19 +95,25 @@
 
   <div class="layout-column hidden-xs hidden-sm flex-25 layout-padding">
     {{#paper-card as |card|}}
-      {{#card.content}}
+      {{#paper-list class="controller-information"}}
         {{#paper-subheader}}Logo{{/paper-subheader}}
-        <div class="flex layout-row layout-align-center">
+        {{#paper-button class="logo-button"}}
           <img src="assets/berlin.png" alt="Logo">
-        </div>
+        {{/paper-button}}
         {{#paper-subheader}}Name{{/paper-subheader}}
-        <p class="layout-padding">Controller</p>
+        {{#paper-button}}
+          Controller
+        {{/paper-button}}
         {{#paper-subheader}}Address{{/paper-subheader}}
-        <span class="layout-padding">Ernst-Reuter-Platz 7</span><br/>
-        <span class="layout-padding">10587 Berlin</span>
+        {{#paper-button}}
+          Ernst-Reuter-Platz 7 <br/>
+          10587 Berlin
+        {{/paper-button}}
         {{#paper-subheader}}Email address{{/paper-subheader}}
-        <a class="layout-padding" href="mailto:support@example.com">support@example.com</a>
-      {{/card.content}}
+        {{#paper-button}}
+          <a href="mailto:support@example.com">support@example.com</a>
+        {{/paper-button}}
+      {{/paper-list}}
     {{/paper-card}}
   </div>
 </div>

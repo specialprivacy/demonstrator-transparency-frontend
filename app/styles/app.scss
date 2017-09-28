@@ -4,3 +4,4 @@ $color-cyan: map-merge($color-cyan, ('contrastDefaultColor' : $light-contrast-co
 @import "ember-paper";
 @import "ember-power-calendar";
 @import "default";
+@import "controller";
