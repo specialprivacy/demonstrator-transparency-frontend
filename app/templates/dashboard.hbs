@@ -57,7 +57,7 @@
         {{paper-divider}}
         {{#paper-subheader}}Time range{{/paper-subheader}}
         {{#paper-item}}
-          {{#power-calendar-range selected=range onCenterChange=(action (mut center) value="date" ) onSelect=(action
+          {{#power-calendar-range center=center selected=range onCenterChange=(action (mut center) value="date" ) onSelect=(action
             (mut range) value="moment" ) as |calendar|}}
             <nav class="ember-power-calendar-nav">
               <button type="button" class="ember-power-calendar-nav-control" onclick= {{action calendar.actions.moveCenter -12 'month'}}>«</button>
