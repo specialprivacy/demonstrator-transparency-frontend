@@ -16,7 +16,6 @@
    text-transform: initial;
    margin: 0;
    border: none;
-
    .md-ripple-container {
     display: none;
    }
@@ -29,7 +28,29 @@
  }
 }
 
+.md-button {
+ color: rgba(0, 0, 0, 0.87);
+ &:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+ }
+}
+
+md-list-item {
+ .md-list-item-inner {
+  .md-secondary-container {
+   md-icon {
+    color: rgba(0, 0, 0, 0.87);
+   }
+  }
+ }
+}
+
+.md-tooltip {
+ font-size: 14px;
+ background-color: rgb(97, 97, 97);
+}
+
 html {
-  font-family: Roboto, sans-serif;
-  font-size: 16px;
+ font-family: Roboto, sans-serif;
+ font-size: 16px;
 }
