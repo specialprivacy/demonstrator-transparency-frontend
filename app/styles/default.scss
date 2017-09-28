@@ -1,0 +1,27 @@
+.ember-power-calendar {
+ margin: 0 auto;
+ @include ember-power-calendar($cell-size: 30px);
+}
+
+.md-subheader-content {
+ color: rgba(0, 0, 0, 0.54);
+}
+
+.md-toolbar-tools {
+ .md-button {
+  &.title-button {
+   color: white;
+   font-size: 24px;
+   font-weight: 400;
+   text-transform: initial;
+   .md-ripple-container {
+    display: none;
+   }
+   &.md-focused,
+   &:active,
+   &:hover {
+    background-color: transparent;
+   }
+  }
+ }
+}
