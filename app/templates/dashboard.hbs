@@ -18,10 +18,10 @@
         {{paper-divider}}
 
         {{#paper-subheader}}Processing context{{/paper-subheader}}
-        {{#each processingContexts as |item|}}
+        {{#each origins as |item|}}
           {{#paper-item as |controls|}}
             {{controls.checkbox value=item.enabled onChange=(action (mut item.enabled)) primary=true}}
-            <p>{{item.name}}</p>
+            <p>{{item.label}}</p>
             <div class="md-secondary-container">
               {{#controls.button secondary=true iconButton=true onClick=(action (mut item.enabled))}}
                 {{paper-icon item.icon}}
@@ -36,11 +36,12 @@
         {{/each}}
 
         {{paper-divider}}
+
         {{#paper-subheader}}Data type{{/paper-subheader}}
-        {{#each dataTypes as |item|}}
+        {{#each types as |item|}}
           {{#paper-item as |controls|}}
             {{controls.checkbox value=item.enabled onChange=(action (mut item.enabled)) primary=true}}
-            <p>{{item.name}}</p>
+            <p>{{item.label}}</p>
             <div class="md-secondary-container">
               {{#controls.button secondary=true iconButton=true onClick=(action (mut item.enabled))}}
                 {{paper-icon item.icon}}
@@ -55,6 +56,7 @@
         {{/each}}
 
         {{paper-divider}}
+
         {{#paper-subheader}}Time range{{/paper-subheader}}
         {{#paper-item}}
           {{#power-calendar-range center=center selected=range onCenterChange=(action (mut center) value="date" ) onSelect=(action
@@ -78,19 +80,31 @@
   </div>
 
   <div class="layout-column flex-50 layout-padding">
-    {{#paper-card as |card|}}
-      {{#card.title as |title|}}
-        {{#title.text as |text|}}
-          {{#text.headline}}Card with image{{/text.headline}}
-          {{#text.subhead}}Large{{/text.subhead}}
-        {{/title.text}}
-        {{title.media size="lg" src="tomster-9918e85a7f1a28c78b484c34cbe88579.png" alt="Tomster" title="Tomster"}}
-      {{/card.title}}
-      {{#card.actions}}
-        {{#paper-button}}Action 1{{/paper-button}}
-        {{#paper-button}}Action 2{{/paper-button}}
-      {{/card.actions}}
-    {{/paper-card}}
+    {{#each sortedData as |item|}}
+      {{paper-icon item.informationOrigin.icon}}
+      {{#paper-card as |card|}}
+        {{#paper-toolbar}}
+          {{#paper-toolbar-tools}}
+            <div>
+              <span>{{item.timestamp}}</span><br/>
+              <span>{{item.label}}</span>
+            </div>
+            <span class="flex"></span>
+            {{#paper-button iconButton=true}}
+              {{paper-icon "more_vert"}}
+            {{/paper-button}}
+          {{/paper-toolbar-tools}}
+        {{/paper-toolbar}}
+
+        {{#card.content}}
+          {{#if (eq item.informationType.name "image")}}
+            <img class="flex" src={{item.value}} alt={{item.value}}>
+          {{else}}
+            <p>{{item.value}}</p>
+          {{/if}}
+        {{/card.content}}
+      {{/paper-card}}
+    {{/each}}
   </div>
 
   <div class="layout-column hidden-xs hidden-sm flex-25 layout-padding">
@@ -98,7 +112,7 @@
       {{#paper-list class="controller-information"}}
         {{#paper-subheader}}Logo{{/paper-subheader}}
         {{#paper-button class="logo-button"}}
-          <img src="assets/berlin.png" alt="Logo">
+          <img src="assets/images/berlin.png" alt="Logo">
         {{/paper-button}}
         {{#paper-subheader}}Name{{/paper-subheader}}
         {{#paper-button}}

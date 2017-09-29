@@ -1,66 +1,51 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-  processingContexts: [
-    {
-      name: "Service data",
-      enabled: true,
-      icon: "assignment",
-      tooltip: "This includes any data you provided to the service intentionally (e.g., posts, likes, shares, comments, search queries)."
-    },
-    {
-      name: "Data I provided",
-      enabled: true,
-      icon: "fingerprint",
-      tooltip: "This shows data, which other users or other kinds of sources provided about you."
-    },
-    {
-      name: "Data of me provided by others",
-      enabled: true,
-      icon: "hearing",
-      tooltip: "This shows any data the service provider observes about you while you use the service (e.g., browsing behavior)."
-    },
-    {
-      name: "Data of my behavior",
-      enabled: true,
-      icon: "visibility",
-      tooltip: "Shows data, which is derived from other data (e.g., profiles for marketing, location tracks, possible preferences)."
-    },
-    {
-      name: "Inferred data about me",
-      enabled: true,
-      icon: "timeline",
-      tooltip: "Shows data, which is derived from other data (e.g., profiles for marketing, location tracks, possible preferences)."
-    }
-  ],
+  data: Ember.computed.alias('model.data'),
+  originsSorting: ['label:asc, name:asc'],
+  origins: Ember.computed.sort('model.origins', 'originsSorting'),
+  typesSorting: ['label:asc, name:asc'],
+  types: Ember.computed.sort('model.types', 'typesSorting'),
 
-  dataTypes: [
-    {
-      name: "Text",
-      enabled: true,
-      icon: "text-format"
-    },
-    {
-      name: "Image",
-      enabled: true,
-      icon: "insert-photo"
-    },
-    {
-      name: "Audio",
-      enabled: true,
-      icon: "audiotrack"
-    },
-    {
-      name: "Video",
-      enabled: true,
-      icon: "play-circle-filled"
-    },
-    {
-      name: "Location",
-      enabled: true,
-      icon: "location-on"
-    }
-  ],
+  filteredData: Ember.computed.intersect('originFilteredData', 'typeFilteredData', 'timeRangeFilteredData'),
+
+  dataSorting: ['timestamp:desc'],
+  sortedData: Ember.computed.sort('filteredData', 'dataSorting'),
+
+  originFilteredData: Ember.computed('origins.@each.enabled', 'data', function(){
+    let origins = this.get('origins').map(function(origin){
+      if(origin.get('enabled')){
+        return origin.get('id');
+      }
+    });
+    return this.get('data').filter(function(item){
+      return !!origins.contains(item.get('informationOrigin.id'));
+    })
+  }),
+
+  typeFilteredData: Ember.computed('types.@each.enabled', 'data', function(){
+    let types = this.get('types').map(function(type){
+      if(type.get('enabled')){
+        return type.get('id');
+      }
+    });
+    return this.get('data').filter(function(item){
+      return !!types.contains(item.get('informationType.id'));
+    })
+  }),
+
+  range: {
+    start: null,
+    end: null
+  },
+  timeRangeFilteredData: Ember.computed('range.start', 'range.end', 'data', function(){
+    let range = this.get('range');
+    return this.get('data').filter(function(item){
+      if(range.start && moment(item.get('timestamp')).isBefore(range.start, 'day')) return false;
+      if(range.end && moment(item.get('timestamp')).isAfter(range.end, 'day')) return false;
+      return true;
+    })
+}),
 
   actions:{
     action1: function(){

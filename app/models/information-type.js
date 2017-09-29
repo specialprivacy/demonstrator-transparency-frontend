@@ -6,12 +6,12 @@ import { belongsTo } from 'ember-data/relationships';
 export default Model.extend({
   // A string representation of this model, based on its attributes.
   // This is what mu-cl-resources uses to search on, and how the model will be presented while editing relationships.
-  stringRep: Ember.computed.collect.apply(this,['id','isGiven', 'timestamp']),
+  stringRep: Ember.computed.collect.apply(this,['id','label', 'name', 'icon', 'tooltip', 'component']),
 
-  isGiven: attr('boolean'),
-  timestamp: attr('datetime'),
-  givenBy: belongsTo('subject', {inverse: null }),
-  givenTo: belongsTo('data-controller', {inverse: null }),
-  purpose: belongsTo('purpose', {inverse: null }),
-  consentFor: belongsTo('information', {inverse: null })
+  label: attr('string'),
+  name: attr('string'),
+  icon: attr('string'),
+  tooltip: attr('string'),
+  component: attr('string'),
+  typeFor: belongsTo('information', {inverse: null })
 });
