@@ -1,0 +1,18 @@
+{{#paper-list class="controller-information"}}
+  {{#paper-subheader}}Logo{{/paper-subheader}}
+  {{#paper-button class="logo-button"}}
+    <img src={{controller.logo}} alt={{controller.logo}}>
+  {{/paper-button}}
+  {{#paper-subheader}}Name{{/paper-subheader}}
+  {{#paper-button}}
+    <span>{{controller.name}}</span>
+  {{/paper-button}}
+  {{#paper-subheader}}Address{{/paper-subheader}}
+  {{#paper-button}}
+    <span>{{controller.address}}</span>
+  {{/paper-button}}
+  {{#paper-subheader}}Email address{{/paper-subheader}}
+  {{#paper-button}}
+    <a href="mailto:{{controller.email}}">{{controller.email}}</a>
+  {{/paper-button}}
+{{/paper-list}}

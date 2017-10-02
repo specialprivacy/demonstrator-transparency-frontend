@@ -3,6 +3,9 @@ import Ember from 'ember';
 export default Ember.Route.extend({
   model(){
     return new Ember.RSVP.hash({
+      dataController: this.get('store').query('data-controller', {}).then(function (controllers){
+        return controllers.objectAt(0);
+      }),
       data: this.get('store').query('information', {
         //filter: {
         //  informationFor: {

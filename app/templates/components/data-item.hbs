@@ -1,0 +1,19 @@
+{{paper-icon item.informationOrigin.icon}}
+{{#paper-card as |card|}}
+  {{#paper-toolbar}}
+    {{#paper-toolbar-tools}}
+      <div>
+        <span>{{item.timestamp}}</span><br/>
+        <span>{{item.label}}</span>
+      </div>
+      <span class="flex"></span>
+      {{#paper-button iconButton=true}}
+        {{paper-icon "more_vert"}}
+      {{/paper-button}}
+    {{/paper-toolbar-tools}}
+  {{/paper-toolbar}}
+
+  {{#card.content}}
+    {{display-type item=item}}
+  {{/card.content}}
+{{/paper-card}}

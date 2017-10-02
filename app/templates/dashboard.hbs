@@ -9,125 +9,34 @@
           <p>Review consent</p>
         {{/paper-item}}
 
-        {{#paper-item onClick=(action "action1") as |controls|}}
+        {{#paper-item onClick=(action "action2") as |controls|}}
           {{paper-icon "account-balance" primary=true}}
           <p>Privacy policy</p>
         {{/paper-item}}
 
+        {{paper-divider}}
+        {{#checkbox-filters items=origins}}Processing context{{/checkbox-filters}}
 
         {{paper-divider}}
-
-        {{#paper-subheader}}Processing context{{/paper-subheader}}
-        {{#each origins as |item|}}
-          {{#paper-item as |controls|}}
-            {{controls.checkbox value=item.enabled onChange=(action (mut item.enabled)) primary=true}}
-            <p>{{item.label}}</p>
-            <div class="md-secondary-container">
-              {{#controls.button secondary=true iconButton=true onClick=(action (mut item.enabled))}}
-                {{paper-icon item.icon}}
-                {{#if item.tooltip}}
-                  {{#paper-tooltip}}
-                    {{item.tooltip}}
-                  {{/paper-tooltip}}
-                {{/if}}
-              {{/controls.button}}
-            </div>
-          {{/paper-item}}
-        {{/each}}
+        {{#checkbox-filters items=types}}Data type{{/checkbox-filters}}
 
         {{paper-divider}}
-
-        {{#paper-subheader}}Data type{{/paper-subheader}}
-        {{#each types as |item|}}
-          {{#paper-item as |controls|}}
-            {{controls.checkbox value=item.enabled onChange=(action (mut item.enabled)) primary=true}}
-            <p>{{item.label}}</p>
-            <div class="md-secondary-container">
-              {{#controls.button secondary=true iconButton=true onClick=(action (mut item.enabled))}}
-                {{paper-icon item.icon}}
-                {{#if item.tooltip}}
-                  {{#paper-tooltip}}
-                    {{item.tooltip}}
-                  {{/paper-tooltip}}
-                {{/if}}
-              {{/controls.button}}
-            </div>
-          {{/paper-item}}
-        {{/each}}
-
-        {{paper-divider}}
-
-        {{#paper-subheader}}Time range{{/paper-subheader}}
-        {{#paper-item}}
-          {{#power-calendar-range center=center selected=range onCenterChange=(action (mut center) value="date" ) onSelect=(action
-            (mut range) value="moment" ) as |calendar|}}
-            <nav class="ember-power-calendar-nav">
-              <button type="button" class="ember-power-calendar-nav-control" onclick= {{action calendar.actions.moveCenter -12 'month'}}>«</button>
-              <button type="button" class="ember-power-calendar-nav-control" onclick= {{action calendar.actions.moveCenter -1 'month'}}>‹</button>
-              <div class="ember-power-calendar-nav-title">
-                {{moment-format calendar.center 'MMMM YYYY'}}
-              </div>
-              <button class="ember-power-calendar-nav-control" onclick= {{action calendar.actions.moveCenter 1 'month'}}>›</button>
-              <button class="ember-power-calendar-nav-control" onclick= {{action calendar.actions.moveCenter 12 'month'}}>»</button>
-            </nav>
-            {{calendar.days}}
-          {{/power-calendar-range}}
-        {{/paper-item}}
+        {{#range-filters range=range}}Time range{{/range-filters}}
 
       {{/paper-list}}
     {{/paper-card}}
 
   </div>
 
-  <div class="layout-column flex-50 layout-padding">
+  <div class="layout-column flex-50 layout-padding item-list">
     {{#each sortedData as |item|}}
-      {{paper-icon item.informationOrigin.icon}}
-      {{#paper-card as |card|}}
-        {{#paper-toolbar}}
-          {{#paper-toolbar-tools}}
-            <div>
-              <span>{{item.timestamp}}</span><br/>
-              <span>{{item.label}}</span>
-            </div>
-            <span class="flex"></span>
-            {{#paper-button iconButton=true}}
-              {{paper-icon "more_vert"}}
-            {{/paper-button}}
-          {{/paper-toolbar-tools}}
-        {{/paper-toolbar}}
-
-        {{#card.content}}
-          {{#if (eq item.informationType.name "image")}}
-            <img class="flex" src={{item.value}} alt={{item.value}}>
-          {{else}}
-            <p>{{item.value}}</p>
-          {{/if}}
-        {{/card.content}}
-      {{/paper-card}}
+      {{data-item item=item}}
     {{/each}}
   </div>
 
   <div class="layout-column hidden-xs hidden-sm flex-25 layout-padding">
     {{#paper-card as |card|}}
-      {{#paper-list class="controller-information"}}
-        {{#paper-subheader}}Logo{{/paper-subheader}}
-        {{#paper-button class="logo-button"}}
-          <img src="assets/images/berlin.png" alt="Logo">
-        {{/paper-button}}
-        {{#paper-subheader}}Name{{/paper-subheader}}
-        {{#paper-button}}
-          Controller
-        {{/paper-button}}
-        {{#paper-subheader}}Address{{/paper-subheader}}
-        {{#paper-button}}
-          Ernst-Reuter-Platz 7 <br/>
-          10587 Berlin
-        {{/paper-button}}
-        {{#paper-subheader}}Email address{{/paper-subheader}}
-        {{#paper-button}}
-          <a href="mailto:support@example.com">support@example.com</a>
-        {{/paper-button}}
-      {{/paper-list}}
+      {{data-controller-info controller=model.dataController}}
     {{/paper-card}}
   </div>
 </div>

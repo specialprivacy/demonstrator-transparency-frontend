@@ -5,3 +5,11 @@ $color-cyan: map-merge($color-cyan, ('contrastDefaultColor' : $light-contrast-co
 @import "ember-power-calendar";
 @import "default";
 @import "controller";
+
+.item-list {
+  border-left: 1px solid black;
+}
+
+.leaflet-container {
+  height: 300px;
+}
