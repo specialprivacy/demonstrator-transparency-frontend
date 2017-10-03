@@ -10,7 +10,7 @@ export default Model.extend({
 
   isGiven: attr('boolean'),
   timestamp: attr('datetime'),
-  givenBy: belongsTo('subject', {inverse: null }),
+  givenBy: belongsTo('user', {inverse: null }),
   givenTo: belongsTo('data-controller', {inverse: null }),
   purpose: belongsTo('purpose', {inverse: null }),
   consentFor: belongsTo('information', {inverse: null })

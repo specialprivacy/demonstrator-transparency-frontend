@@ -13,18 +13,25 @@
         {{/paper-button}}
       {{/menu.trigger}}
       {{#menu.content width=4 as |content|}}
-        {{#content.menu-item onClick="openSomething"}}
-          {{paper-icon "account_circle"}}
-          <span>My profile</span>
-        {{/content.menu-item}}
-        {{#content.menu-item onClick="openSomething"}}
-          {{paper-icon "settings"}}
-          <span>Settings</span>
-        {{/content.menu-item}}
-        {{#content.menu-item onClick="openSomething"}}
-          {{paper-icon "directions_run"}}
-          <span>Logout</span>
-        {{/content.menu-item}}
+        {{#if session.isAuthenticated}}
+          {{#content.menu-item onClick="openSomething"}}
+            {{paper-icon "account_circle"}}
+            <span>My profile</span>
+          {{/content.menu-item}}
+          {{#content.menu-item onClick="openSomething"}}
+            {{paper-icon "settings"}}
+            <span>Settings</span>
+          {{/content.menu-item}}
+          {{#content.menu-item onClick="logout"}}
+            {{paper-icon "directions_run"}}
+            <span>Logout</span>
+          {{/content.menu-item}}
+        {{else}}
+          {{#content.menu-item onClick="openSomething"}}
+            {{paper-icon "vpn_key"}}
+            <span>Login</span>
+          {{/content.menu-item}}
+        {{/if}}
       {{/menu.content}}
     {{/paper-menu}}
   {{/paper-toolbar-tools}}

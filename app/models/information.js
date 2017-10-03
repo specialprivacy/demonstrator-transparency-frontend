@@ -11,7 +11,8 @@ export default Model.extend({
   timestamp: attr('datetime'),
   label: attr('string'),
   value: attr('string'),
-  informationFor: belongsTo('subject', {inverse: "information" }),
+  informationFor: belongsTo('user', {inverse: null }),
+  informationGivenTo: belongsTo('data-controller', {inverse: null }),
   informationType: belongsTo('information-type', {inverse: null }),
   informationOrigin: belongsTo('information-origin', {inverse: null }),
   consents: hasMany('consent', {inverse: null })
