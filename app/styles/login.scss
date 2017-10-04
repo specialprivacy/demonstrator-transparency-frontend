@@ -1,0 +1,16 @@
+.login-box {
+  width: 30%;
+  padding-top: 3%;
+  margin: 0 auto;
+
+  .layout-row {
+    md-input-container {
+    width: 80%;
+    margin: 0 auto;
+    }
+
+    button {
+        text-align: center;
+    }
+  }
+}

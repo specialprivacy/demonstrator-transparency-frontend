@@ -1,17 +1,24 @@
-{{#paper-card as |card|}}
-  {{#card.title}}
-    Login
-  {{/card.title}}
-  {{#card.content}}
-    {{mu-login}}
-  {{/card.content}}
-{{/paper-card}}
+<div class="login-box">
+  {{#paper-card as |card|}}
+    {{#paper-toolbar}}
+      {{#paper-toolbar-tools}}
+        Login
+      {{/paper-toolbar-tools}}
+    {{/paper-toolbar}}
+    {{#card.content}}
+      {{mu-login}}
+    {{/card.content}}
+  {{/paper-card}}
+</div>
 
-{{#paper-card as |card|}}
-  {{#card.title}}
-    Register
-  {{/card.title}}
-  {{#card.content}}
-    {{mu-register}}
-  {{/card.content}}
-{{/paper-card}}
+
+<div class="registration-box">
+  {{#paper-card as |card|}}
+    {{#card.title}}
+      Register
+    {{/card.title}}
+    {{#card.content}}
+      {{mu-register}}
+    {{/card.content}}
+  {{/paper-card}}
+</div>
