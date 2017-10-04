@@ -10,7 +10,28 @@ export default Model.extend({
 
   label: attr('string'),
   name: attr('string'),
-  icon: attr('string'),
-  tooltip: attr('string'),
-  typeFor: belongsTo('information', {inverse: null })
+  typeFor: belongsTo('information', {inverse: null }),
+
+  icon: Ember.computed('name', function(){
+    return this.get('icons')[this.get('name')];
+  }),
+  tooltip: Ember.computed('name', function(){
+    return this.get('tooltips')[this.get('name')];
+  }),
+
+  icons: {
+    "text": "text-format",
+    "image": "insert-photo",
+    "video": "play-circle-filled",
+    "audio": "audiotrack",
+    "location": "location-on"
+  },
+
+  tooltips: {
+    "text": null,
+    "image": null,
+    "video": null,
+    "audio": null,
+    "location": null
+  }
 });
