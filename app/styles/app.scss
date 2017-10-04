@@ -14,3 +14,11 @@ $color-cyan: map-merge($color-cyan, ('contrastDefaultColor' : $light-contrast-co
 .leaflet-container {
   height: 300px;
 }
+
+.leaflet-pane {
+  z-index: 50;
+}
+
+.leaflet-top {
+  z-index: 51;
+}
