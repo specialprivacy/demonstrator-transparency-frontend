@@ -14,9 +14,11 @@
 
 <div class="registration-box">
   {{#paper-card as |card|}}
-    {{#card.title}}
-      Register
-    {{/card.title}}
+    {{#paper-toolbar}}
+      {{#paper-toolbar-tools}}
+        Register
+      {{/paper-toolbar-tools}}
+    {{/paper-toolbar}}
     {{#card.content}}
       {{mu-register}}
     {{/card.content}}
