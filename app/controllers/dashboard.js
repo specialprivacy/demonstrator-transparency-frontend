@@ -48,6 +48,9 @@ export default Ember.Controller.extend({
 }),
 
   actions:{
+    toggleShowPrivacyPolicyDialog: function() {
+      this.toggleProperty('showPrivacyPolicyDialog')
+    },
     action1: function(){
       console.log("1");
       return null;
