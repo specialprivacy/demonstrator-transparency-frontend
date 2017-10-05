@@ -38,11 +38,13 @@ export default Ember.Controller.extend({
     start: null,
     end: null
   },
-  timeRangeFilteredData: Ember.computed('range.start', 'range.end', 'data', function(){
-    let range = this.get('range');
+  timeRangeFilteredData: Ember.computed('startDate', 'endDate', 'data', function(){
+    let start, end;
+    start = this.get('startDate');
+    end = this.get('endDate');
     return this.get('data').filter(function(item){
-      if(range.start && moment(item.get('timestamp')).isBefore(range.start, 'day')) return false;
-      if(range.end && moment(item.get('timestamp')).isAfter(range.end, 'day')) return false;
+      if(start && moment(item.get('timestamp')).isBefore(start, 'day')) return false;
+      if(end && moment(item.get('timestamp')).isAfter(end, 'day')) return false;
       return true;
     })
 }),

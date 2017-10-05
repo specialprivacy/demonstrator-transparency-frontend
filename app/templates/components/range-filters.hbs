@@ -1,16 +1,21 @@
 {{#paper-subheader}}{{yield}}{{/paper-subheader}}
-{{#paper-item}}
-  {{#power-calendar-range center=center selected=range onCenterChange=(action (mut center) value="date" ) onSelect=(action
-  (mut range) value="moment" ) as |calendar|}}
-    <nav class="ember-power-calendar-nav">
-      <button type="button" class="ember-power-calendar-nav-control" onclick= {{action calendar.actions.moveCenter -12 'month'}}>«</button>
-      <button type="button" class="ember-power-calendar-nav-control" onclick= {{action calendar.actions.moveCenter -1 'month'}}>‹</button>
-      <div class="ember-power-calendar-nav-title">
-        {{moment-format calendar.center 'MMMM YYYY'}}
-      </div>
-      <button class="ember-power-calendar-nav-control" onclick= {{action calendar.actions.moveCenter 1 'month'}}>›</button>
-      <button class="ember-power-calendar-nav-control" onclick= {{action calendar.actions.moveCenter 12 'month'}}>»</button>
-    </nav>
-    {{calendar.days}}
-  {{/power-calendar-range}}
+{{#paper-item as |controls|}}
+
+  {{#paper-list class="layout-column flex"}}
+    {{#paper-item}}
+      {{pikaday-input placeholder="From" maxDate=endDate value=startDate onSelection=(action (mut startDate))}}
+    {{/paper-item}}
+    {{#paper-item}}
+      {{pikaday-input placeholder="To" minDate=startDate value=endDate onSelection=(action (mut endDate))}}
+    {{/paper-item}}
+  {{/paper-list}}
+
+  <div class="md-secondary-container">
+    {{#controls.button iconButton=true secondary=true}}
+    {{paper-icon "info" class="flex"}}
+    {{#paper-tooltip}}
+      Select a time range to review data from a specific time period.
+    {{/paper-tooltip}}
+  {{/controls.button}}
+  </div>
 {{/paper-item}}
