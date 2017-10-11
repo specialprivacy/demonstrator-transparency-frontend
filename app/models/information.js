@@ -15,5 +15,9 @@ export default Model.extend({
   informationGivenTo: belongsTo('data-controller', {inverse: null }),
   informationType: belongsTo('information-type', {inverse: null }),
   informationOrigin: belongsTo('information-origin', {inverse: null }),
-  consents: hasMany('consent', {inverse: null })
+  consents: hasMany('consent', {inverse: null }),
+
+  formattedTimestamp: Ember.computed('timestamp', function(){
+    return moment(this.get('timestamp')).format('LLL');
+  })
 });
