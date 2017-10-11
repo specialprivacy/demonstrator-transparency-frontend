@@ -7,7 +7,7 @@
       {{#controls.button secondary=true iconButton=true onClick=(action (mut item.enabled))}}
         {{paper-icon item.icon}}
         {{#if item.tooltip}}
-          {{#paper-tooltip}}
+          {{#paper-tooltip position="top"}}
             {{item.tooltip}}
           {{/paper-tooltip}}
         {{/if}}

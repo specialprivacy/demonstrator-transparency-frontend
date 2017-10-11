@@ -28,10 +28,10 @@ export default Model.extend({
   },
 
   tooltips: {
-    "text": null,
-    "image": null,
-    "video": null,
-    "audio": null,
-    "location": null
+    "text": "Show or hide text data.",
+    "image": "Show or hide images.",
+    "video": "Show or hide videos.",
+    "audio": "Show or hide audio records.",
+    "location": "Show or hide location data."
   }
 });
