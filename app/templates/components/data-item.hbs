@@ -7,9 +7,54 @@
         <span>{{item.label}}</span>
       </div>
       <span class="flex"></span>
-      {{#paper-button iconButton=true}}
-        {{paper-icon "more_vert"}}
-      {{/paper-button}}
+
+      {{#paper-menu position="target-left target" as |menu|}}
+        {{#menu.trigger}}
+          {{#paper-button iconButton=true}}
+            {{paper-icon "more_vert" class="md-menu-origin"}}
+          {{/paper-button}}
+        {{/menu.trigger}}
+
+        {{#menu.content as |content|}}
+          {{#each item.consents as |consent index|}}
+            {{#if (is-pending consent.withPurpose)}}
+              {{paper-icon "loading"}} Loading purpose...
+            {{else}}
+
+              {{#if (is-pending consent.withPurpose)}}
+                Loading purpose...
+              {{else}}
+                {{#paper-subheader}}
+                  <h3 class="flex">Purpose: </h3> {{consent.purpose.label}}
+                {{/paper-subheader}}
+              {{/if}}
+              {{!paper-divider}}
+
+              {{#content.menu-item onClick=(action (mut consent.withdrawRequested))}}
+                {{paper-icon "pan-tool" class="md-menu-align-target" accent=consent.withdrawRequested}}
+                <p style="width: 190px;">Withdraw consent</p>
+              {{/content.menu-item}}
+
+              {{#content.menu-item onClick=(action "toggleProperty" consent "rectifyRequested")}}
+                {{paper-icon "edit" class="md-menu-align-target" accent=consent.rectifyRequested}}
+                <p style="width: 190px;">Rectify</p>
+              {{/content.menu-item}}
+
+              {{#content.menu-item onClick=(action "toggleProperty" consent "eraseRequested")}}
+                {{paper-icon "clear" class="md-menu-align-target" accent=consent.eraseRequested}}
+                <p style="width: 190px;">Erase</p>
+              {{/content.menu-item}}
+            {{/if}}
+            {{paper-divider}}
+          {{else}}
+            {{#content.menu-item onClick="openSomething"}}
+              {{paper-icon "warning" class="md-menu-align-target"}}
+              <p>No consents for this information</p>
+            {{/content.menu-item}}
+          {{/each}}
+        {{/menu.content}}
+      {{/paper-menu}}
+
     {{/paper-toolbar-tools}}
   {{/paper-toolbar}}
 

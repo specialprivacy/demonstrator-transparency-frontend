@@ -4,7 +4,7 @@
       {{#paper-list}}
         {{#paper-subheader}}General{{/paper-subheader}}
 
-        {{#paper-item onClick=(action "action1") as |controls|}}
+        {{#paper-item onClick=(action "toggleShowReviewConsentDialog") as |controls|}}
           {{paper-icon "description" primary=true}}
           <p>Review consent</p>
         {{/paper-item}}
@@ -41,6 +41,27 @@
   </div>
 </div>
 
+{{#if showReviewConsentDialog}}
+  {{#paper-dialog class="flex-50 vflex-75" onClose=(action "toggleShowReviewConsentDialog") clickOutsideToClose=true}}
+    {{#paper-toolbar}}
+      {{#paper-toolbar-tools}}
+        <h1>Privacy policy of this controller</h1>
+        <span class="flex"></span>
+        {{#paper-button iconButton=true onClick=(action "toggleShowReviewConsentDialog")}}{{paper-icon icon="close"}}{{/paper-button}}
+      {{/paper-toolbar-tools}}
+    {{/paper-toolbar}}
+    {{paper-divider}}
+    {{#paper-dialog-content}}
+      <p>{{paper-icon "warning"}}Work in progress</p>
+    {{/paper-dialog-content}}
+    {{paper-divider}}
+    {{#paper-dialog-actions class="layout-row"}}
+      <span class="flex"></span>
+      {{#paper-button onClick=(action "toggleShowReviewConsentDialog")}}Close{{/paper-button}}
+    {{/paper-dialog-actions}}
+  {{/paper-dialog}}
+{{/if}}
+
 {{#if showPrivacyPolicyDialog}}
   {{#paper-dialog class="flex-50 vflex-75" onClose=(action "toggleShowPrivacyPolicyDialog") clickOutsideToClose=true}}
     {{#paper-toolbar}}
@@ -62,4 +83,5 @@
       {{#paper-button onClick=(action "toggleShowPrivacyPolicyDialog")}}Close{{/paper-button}}
     {{/paper-dialog-actions}}
   {{/paper-dialog}}
+
 {{/if}}

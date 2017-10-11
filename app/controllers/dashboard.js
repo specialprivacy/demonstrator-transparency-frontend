@@ -50,6 +50,9 @@ export default Ember.Controller.extend({
 }),
 
   actions:{
+    toggleShowReviewConsentDialog: function() {
+      this.toggleProperty('showReviewConsentDialog')
+    },
     toggleShowPrivacyPolicyDialog: function() {
       this.toggleProperty('showPrivacyPolicyDialog')
     },
