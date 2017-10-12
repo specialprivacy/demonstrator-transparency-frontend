@@ -21,26 +21,25 @@
               {{paper-icon "loading"}} Loading purpose...
             {{else}}
 
-              {{#if (is-pending consent.withPurpose)}}
+              {{#if (is-pending consent.purpose)}}
                 Loading purpose...
               {{else}}
                 {{#paper-subheader}}
                   <h3 class="flex">Purpose: </h3> {{consent.purpose.label}}
                 {{/paper-subheader}}
               {{/if}}
-              {{!paper-divider}}
 
-              {{#content.menu-item onClick=(action (mut consent.withdrawRequested))}}
+              {{#content.menu-item onClick=(action "openDialog" consent "showWithdrawDialog")}}
                 {{paper-icon "pan-tool" class="md-menu-align-target" accent=consent.withdrawRequested}}
                 <p style="width: 190px;">Withdraw consent</p>
               {{/content.menu-item}}
 
-              {{#content.menu-item onClick=(action "toggleProperty" consent "rectifyRequested")}}
+              {{#content.menu-item onClick=(action "openDialog" consent "showRectifyDialog")}}
                 {{paper-icon "edit" class="md-menu-align-target" accent=consent.rectifyRequested}}
                 <p style="width: 190px;">Rectify</p>
               {{/content.menu-item}}
 
-              {{#content.menu-item onClick=(action "toggleProperty" consent "eraseRequested")}}
+              {{#content.menu-item onClick=(action "openDialog" consent "showEraseDialog")}}
                 {{paper-icon "clear" class="md-menu-align-target" accent=consent.eraseRequested}}
                 <p style="width: 190px;">Erase</p>
               {{/content.menu-item}}
@@ -62,3 +61,15 @@
     {{display-type item=item}}
   {{/card.content}}
 {{/paper-card}}
+
+{{#if showWithdrawDialog}}
+  {{consent-dialog consent=targetConsent message=messages.withdrawal closeDialog=(action "closeDialog" "showWithdrawDialog") confirmAction=(action "confirmWithdrawal" "showWithdrawDialog")}}
+{{/if}}
+
+{{#if showRectifyDialog}}
+  {{consent-dialog consent=targetConsent message=messages.rectify closeDialog=(action "closeDialog" "showRectifyDialog") confirmAction=(action "confirmRectify" "showRectifyDialog")}}
+{{/if}}
+
+{{#if showEraseDialog}}
+  {{consent-dialog consent=targetConsent message=messages.erase closeDialog=(action "closeDialog" "showEraseDialog") confirmAction=(action "confirmErase" "showEraseDialog")}}
+{{/if}}
