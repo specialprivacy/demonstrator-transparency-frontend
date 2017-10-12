@@ -1,6 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  classNames: ['data-item'],
+
   messages: Ember.computed('targetConsent.purpose.label', function(){
     let purpose = this.get('targetConsent.purpose.label');
     return {
