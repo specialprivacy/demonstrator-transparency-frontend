@@ -1,20 +1,13 @@
-FROM node:4 AS build
-LABEL authors="Cecile Tonglet <cecile.tonglet@tenforce.com>"
-ARG env=development
+FROM madnificent/ember:2.14.0 as ember
 
-RUN npm -q set progress=false
+MAINTAINER Esteban Sastre <esteban.sastre@tenforce.com>
+MAINTAINER Aad Versteden <madnificent@gmail.com>
 
-RUN mkdir /src
-WORKDIR /src
+COPY . /app
+RUN npm install
+RUN npm rebuild node-sass
+RUN ember build
 
-ADD package.json /src/
-RUN npm install -q
-
-ENV PATH=/src/node_modules/.bin:$PATH
-
-COPY . /src/
-RUN ember build --environment=$env
-
-
-FROM semtech/ember-proxy-service:latest
-COPY --from=build /src/dist /app
+FROM nginx:1
+RUN ln -s /usr/share/nginx/html /app
+COPY --from=ember /app/dist /app
