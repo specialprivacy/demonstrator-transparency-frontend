@@ -2,23 +2,15 @@
   <div class="layout-column hidden-xs hidden-sm flex-25 layout-padding">
     {{#paper-card as |card|}}
       {{#paper-list}}
-        {{#paper-subheader}}General{{/paper-subheader}}
-
-        {{#paper-item onClick=(action "toggleShowReviewConsentDialog") as |controls|}}
-          {{paper-icon "description" primary=true}}
-          <p>Review consent</p>
-        {{/paper-item}}
-
-        {{#paper-item onClick=(action "toggleShowPrivacyPolicyDialog") as |controls|}}
-          {{paper-icon "account-balance" primary=true}}
-          <p>Privacy policy</p>
-        {{/paper-item}}
 
         {{paper-divider}}
-        {{#checkbox-filters items=origins}}Processing context{{/checkbox-filters}}
+        {{#checkbox-filters items=sortedCompliances}}Compliance{{/checkbox-filters}}
 
         {{paper-divider}}
-        {{#checkbox-filters items=types}}Data type{{/checkbox-filters}}
+        {{#checkbox-filters items=sortedPurposes}}Purposes{{/checkbox-filters}}
+
+        {{paper-divider}}
+        {{#checkbox-filters items=sortedAttributes}}Attributes{{/checkbox-filters}}
 
         {{paper-divider}}
         {{#range-filters startDate=startDate endDate=endDate}}Time range{{/range-filters}}
@@ -28,18 +20,14 @@
 
   </div>
 
-  <div class="layout-column flex-50 layout-padding data-item-list">
+  <div class="layout-column flex-75 layout-padding data-item-list">
     <div class="vertical-line" />
-    {{#each sortedData as |item|}}
+
+    {{#each slicedData as |item|}}
       {{data-item item=item}}
     {{/each}}
   </div>
 
-  <div class="layout-column hidden-xs hidden-sm flex-25 layout-padding">
-    {{#paper-card as |card|}}
-      {{data-controller-info controller=model.dataController}}
-    {{/paper-card}}
-  </div>
 </div>
 
 {{#if showReviewConsentDialog}}

@@ -37,7 +37,7 @@ $color-cyan: map-merge($color-cyan, ('contrastDefaultColor' : $light-contrast-co
 
   div.vertical-line{
     position: absolute;
-    top: 0px;
+    top: 0;
     left: 18px;
     padding: 0;
     width: 2px; /* Line width */
@@ -49,9 +49,66 @@ $color-cyan: map-merge($color-cyan, ('contrastDefaultColor' : $light-contrast-co
     position: relative;
     padding-left: 40px;
 
+    &.new {
+      opacity: 0;
+      animation: new-item-animation .3s linear forwards;
+    }
+
+    @keyframes new-item-animation {
+      from {
+        opacity: 0;
+        transform: translateY(-400px);
+      }
+
+      to {
+        opacity: 1;
+        transform : translateY(0);
+      }
+    }
+
+
+    .card {
+      padding: 10px;
+      margin: 10px;
+
+      .notification {
+        position: absolute;
+        left: 50%;
+        margin: 0px;
+        color: gold;
+        font-size: 36px;
+        cursor: default;
+
+        transition: all .5s ease-in-out;
+        opacity: 0;
+        &.show {
+          opacity: 1;
+        }
+      }
+      .date {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        color: #9E9E9E;
+        font-size: 12px;
+        margin: 20px;
+      }
+      .policy {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        color: #9E9E9E;
+        font-size: 12px;
+        margin: 20px;
+      }
+      .message {
+        line-height: 75px;
+      }
+    }
     .data-item-icon {
+      transition: all .5s ease-in-out;
       position: absolute;
-      top: 25px;
+      top: 45px;
       left: -10px;
       border-radius: 50%;
       width: 30px;
@@ -59,9 +116,16 @@ $color-cyan: map-merge($color-cyan, ('contrastDefaultColor' : $light-contrast-co
       margin-left: 2px;
       padding-left: 5px;
       padding-top: 5px;
-      background: rgb(233, 240, 245);
       border: 2px solid rgb(0, 168, 156);
-      color: rgb(0, 168, 156);
+      color: white;
+      &.ok {
+        background-color: green;
+      }
+      &.nok {
+        background-color: red;
+      }
     }
+
+
   }
 }

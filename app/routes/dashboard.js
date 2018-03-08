@@ -1,32 +1,29 @@
 import Ember from 'ember';
-import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-export default Ember.Route.extend(AuthenticatedRouteMixin, {
-  currentUser: Ember.inject.service('current-user'),
-  model(){
-    return new Ember.RSVP.hash({
-      dataController: this.get('store').query('data-controller', {}).then(function (controllers){
-        return controllers.objectAt(0);
-      }),
-      data: this.get('store').query('information', {
-        filter: {
-          "information-for": {
-            id: this.get('currentUser.user.id')
-          }
-        },
-        include: "information-type,information-origin",
-        sort: "-timestamp"
-      }),
-      origins: this.get('store').query('informationOrigin', {}).then(function (results) {
-        return results.forEach(function (result) {
-          result.set('enabled', true);
-        })
-      }),
-      types: this.get('store').query('informationType', {}).then(function (results) {
-        return results.forEach(function (result) {
-          result.set('enabled', true);
-        })
-      })
-    })
+export default Ember.Route.extend({
+  activate: function() {
+    // when entering the route
+    // if there is no eventSource
+    // create one and connect to the server
+    if (! this.eventSource) {
+      var store = this.store;
+      this.eventSource = new EventSource('/push-tester/connect').addEventListener('message', (e) => {
+        var pushData = window.$.parseJSON(e.data);
+        store.pushPayload('report', pushData);
+      });
+
+    }
+  },
+  deactivate: function(){
+    // when exiting the route, close the connection
+    // and set the eventSource variable back to null
+    if (this.eventSource) {
+      this.eventSource.close();
+      this.eventSource = null;
+    }
+  },
+  model: function() {
+    // load all previous reports from the store
+    return this.get('store').findAll('report');
   }
 });

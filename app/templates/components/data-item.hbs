@@ -1,75 +1,23 @@
-{{paper-icon item.informationOrigin.icon class="data-item-icon"}}
-{{#paper-card as |card|}}
-  {{#paper-toolbar}}
-    {{#paper-toolbar-tools}}
-      <div>
-        <span>{{item.formattedTimestamp}}</span><br/>
-        <span>{{item.label}}</span>
-      </div>
-      <span class="flex"></span>
+{{paper-icon (if item.ok "check" "not interested") class=(concat "data-item-icon" (if item.ok " ok" " nok"))}}
+{{#paper-card class="card" as |card|}}
 
-      {{#paper-menu position="target-left target" as |menu|}}
-        {{#menu.trigger}}
-          {{#paper-button iconButton=true}}
-            {{paper-icon "more_vert" class="md-menu-origin"}}
-          {{/paper-button}}
-        {{/menu.trigger}}
+  {{paper-icon "notifications" class=(if item.new "notification show" "notification")}}
+  <span class="message">
+    {{item.log}}
+  </span>
+  <span class="purpose">
+    {{item.purpose}}
+  </span>
+  <span class="attributes">
+    {{item.attributes}}
+  </span>
+  <span class="policy">
+    {{item.policy}}
+  </span>
 
-        {{#menu.content as |content|}}
-          {{#each item.consents as |consent index|}}
-            {{#if (is-pending consent.withPurpose)}}
-              {{paper-icon "loading"}} Loading purpose...
-            {{else}}
+  <span class="date">
+    {{item.formattedTimestamp}}
+  </span>
 
-              {{#if (is-pending consent.purpose)}}
-                Loading purpose...
-              {{else}}
-                {{#paper-subheader}}
-                  <h3 class="flex">Purpose: </h3> {{consent.purpose.label}}
-                {{/paper-subheader}}
-              {{/if}}
-
-              {{#content.menu-item onClick=(action "openDialog" consent "showWithdrawDialog")}}
-                {{paper-icon "pan-tool" class="md-menu-align-target" accent=consent.withdrawRequested}}
-                <p style="width: 190px;">Withdraw consent</p>
-              {{/content.menu-item}}
-
-              {{#content.menu-item onClick=(action "openDialog" consent "showRectifyDialog")}}
-                {{paper-icon "edit" class="md-menu-align-target" accent=consent.rectifyRequested}}
-                <p style="width: 190px;">Rectify</p>
-              {{/content.menu-item}}
-
-              {{#content.menu-item onClick=(action "openDialog" consent "showEraseDialog")}}
-                {{paper-icon "clear" class="md-menu-align-target" accent=consent.eraseRequested}}
-                <p style="width: 190px;">Erase</p>
-              {{/content.menu-item}}
-            {{/if}}
-            {{paper-divider}}
-          {{else}}
-            {{#content.menu-item onClick="openSomething"}}
-              {{paper-icon "warning" class="md-menu-align-target"}}
-              <p>No consents for this information</p>
-            {{/content.menu-item}}
-          {{/each}}
-        {{/menu.content}}
-      {{/paper-menu}}
-
-    {{/paper-toolbar-tools}}
-  {{/paper-toolbar}}
-
-  {{#card.content}}
-    {{display-type item=item}}
-  {{/card.content}}
 {{/paper-card}}
 
-{{#if showWithdrawDialog}}
-  {{consent-dialog consent=targetConsent message=messages.withdrawal closeDialog=(action "closeDialog" "showWithdrawDialog") confirmAction=(action "confirmWithdrawal" "showWithdrawDialog")}}
-{{/if}}
-
-{{#if showRectifyDialog}}
-  {{consent-dialog consent=targetConsent message=messages.rectify closeDialog=(action "closeDialog" "showRectifyDialog") confirmAction=(action "confirmRectify" "showRectifyDialog")}}
-{{/if}}
-
-{{#if showEraseDialog}}
-  {{consent-dialog consent=targetConsent message=messages.erase closeDialog=(action "closeDialog" "showEraseDialog") confirmAction=(action "confirmErase" "showEraseDialog")}}
-{{/if}}
