@@ -11,8 +11,8 @@ export default Ember.Controller.extend({
     });
   },
 
-  compliances: [{label: "Follows policies", value: true, enabled: true, icon: "check"}, {label: "Doesn't follow policies", value:false, enabled: true, icon: "not interested"}],
-  purposes: [{label: "Accounting", value: "accounting", enabled: true}, {label: "Administration", value:"administration", enabled: true}, {label: "Charity", value:"charity", enabled: true}, {label: "News", value:"news", enabled: true}],
+  compliances: [{label: "Compliant", value: true, enabled: true, icon: "check"}, {label: "Not compliant", value:false, enabled: true, icon: "not interested"}],
+  purposes: [{label: "Accounting", value: "accounting", enabled: true}, {label: "Administration", value:"administration", enabled: true}, {label: "Charity", value:"charity", enabled: true}, {label: "Tourist recommender app", value:"tourist", enabled: true}],
   attributes: [
     {label: "Birth date", value: "birth_date", enabled: true},
     {label: "Location", value: "location", enabled: true},
@@ -52,19 +52,6 @@ export default Ember.Controller.extend({
     });
   }),
 
-  filteredData: Ember.computed.intersect('dataCheckedByCompliance', 'dataCheckedByPurpose', 'dataCheckedByAttributes'),
-
-  dataSorting: ['timestamp:desc', 'log:asc'],
-  sortedData: Ember.computed.sort('filteredData', 'dataSorting'),
-
-  slicedData: Ember.computed('sortedData.length', function(){
-    return this.get('sortedData').slice(0, 20);
-  }),
-  /*
-  range: {
-    start: null,
-    end: null
-  },
   timeRangeFilteredData: Ember.computed('startDate', 'endDate', 'data', function(){
     let start, end;
     start = this.get('startDate');
@@ -74,22 +61,118 @@ export default Ember.Controller.extend({
       if(end && moment(item.get('timestamp')).isAfter(end, 'day')) return false;
       return true;
     })
-}),*/
+  }),
 
-  actions:{
-    toggleShowReviewConsentDialog: function() {
-      this.toggleProperty('showReviewConsentDialog')
+  filteredData: Ember.computed.intersect('dataCheckedByCompliance', 'dataCheckedByPurpose', 'dataCheckedByAttributes'/* TODO, 'timeRangeFilteredData'*/),
+
+  dataSorting: ['timestamp:desc', 'log:asc'],
+  sortedData: Ember.computed.sort('filteredData', 'dataSorting'),
+
+  slicedData: Ember.computed('sortedData.length', function(){
+    return this.get('sortedData').slice(0, 20);
+  }),
+
+
+  // Charts
+  okArray: Ember.computed.filter('data.@each.ok', function(item){
+    return item.get('ok');
+  }),
+  nokArray: Ember.computed.filter('data.@each.ok', function(item){
+    return !item.get('ok');
+  }),
+  okSum: Ember.computed.alias('okArray.length'),
+  nokSum: Ember.computed.alias('nokArray.length'),
+  complianceDataObserver: Ember.observer('nokSum', 'okSum', function(){
+    this.get('complianceChartData.datasets')[0].data[0] = this.get('nokSum');
+    this.get('complianceChartData.datasets')[0].data[1] = this.get('okSum');
+    this.notifyPropertyChange('complianceChartData');
+  }).on('init'),
+  complianceChartData:
+  {
+      datasets: [{
+        data: [0,0],
+        backgroundColor: [
+          "#F44336", "#4CAF50"
+        ],
+        label: "Compliance"
+      }],
+
+      // These labels appear in the legend and in the tooltips when hovering different arcs
+      labels: [
+        'Not compliant',
+        'Compliant'
+      ]
+  },
+  barChartOptions: {
+    title:{
+      display: false
     },
-    toggleShowPrivacyPolicyDialog: function() {
-      this.toggleProperty('showPrivacyPolicyDialog')
+    legend:{
+      display: false
     },
-    action1: function(){
-      console.log("1");
-      return null;
-    },
-    action2: function(){
-      console.log("2");
-      return null;
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero:true
+        }
+      }]
     }
+  },
+  pieChartOptions: {
+    title:{
+      display: false
+    }
+  },
+
+  accountingArray: Ember.computed.filter('nokArray.@each.purpose', function(item){
+    return item.get('purpose') === 'accounting';
+  }),
+  administrationArray: Ember.computed.filter('nokArray.@each.purpose', function(item){
+    return item.get('purpose') === 'administration';
+  }),
+  charityArray: Ember.computed.filter('nokArray.@each.purpose', function(item){
+    return item.get('purpose') === 'charity';
+  }),
+  touristArray: Ember.computed.filter('nokArray.@each.purpose', function(item){
+    return item.get('purpose') === 'tourist';
+  }),
+  accountingSum: Ember.computed.alias('accountingArray.length'),
+  administrationSum: Ember.computed.alias('administrationArray.length'),
+  charitySum: Ember.computed.alias('charityArray.length'),
+  touristSum: Ember.computed.alias('touristArray.length'),
+
+  accountingObserver: Ember.observer('accountingSum', function(){
+    this.get('purposeChartData.datasets')[0].data[0] = this.get('accountingSum');
+    this.notifyPropertyChange('purposeChartData');
+  }).on('init'),
+  administrationObserver: Ember.observer('administrationSum', function(){
+    this.get('purposeChartData.datasets')[0].data[1] = this.get('administrationSum');
+    this.notifyPropertyChange('purposeChartData');
+  }).on('init'),
+  charityObserver: Ember.observer('charitySum', function(){
+    this.get('purposeChartData.datasets')[0].data[2] = this.get('charitySum');
+    this.notifyPropertyChange('purposeChartData');
+  }).on('init'),
+  touristObserver: Ember.observer('touristSum', function(){
+    this.get('purposeChartData.datasets')[0].data[3] = this.get('touristSum');
+    this.notifyPropertyChange('purposeChartData');
+  }).on('init'),
+
+
+
+  purposeChartData:
+  {
+      datasets: [{
+        data: [0,0,0,0],
+        backgroundColor: [
+         "#03A9F4", "#00BCD4", "#009688", "#2196F3"
+         ],
+        label: "Violations per purpose"
+      }],
+
+      // These labels appear in the legend and in the tooltips when hovering different arcs
+      labels: ["Accounting", "Administration", "Charity", "Tourist recommender app"]
   }
+
+
 });

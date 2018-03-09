@@ -1,0 +1,6 @@
+{
+  "name": "special-demo-ui",
+  "dependencies": {
+    "chartjs": "2.1.6"
+  }
+}

@@ -8,22 +8,6 @@ $color-cyan: map-merge($color-cyan, ('contrastDefaultColor' : $light-contrast-co
 @import "login";
 
 
-.leaflet-container {
-  height: 300px;
-}
-
-.leaflet-pane {
-  z-index: 50;
-}
-
-.leaflet-top {
-  z-index: 51;
-}
-
-.leaflet-bottom {
-  z-index: 51;
-}
-
 .vflex-75 {
   height: 75%;
 }
@@ -116,13 +100,13 @@ $color-cyan: map-merge($color-cyan, ('contrastDefaultColor' : $light-contrast-co
       margin-left: 2px;
       padding-left: 5px;
       padding-top: 5px;
-      border: 2px solid rgb(0, 168, 156);
+      border: 2px solid white;
       color: white;
       &.ok {
-        background-color: green;
+        background-color: #4CAF50;
       }
       &.nok {
-        background-color: red;
+        background-color: #F44336;
       }
     }
 
