@@ -74,21 +74,7 @@ div.vertical-line{
     .card {
       padding: 10px;
       margin: 10px;
-
-      .notification {
-        position: absolute;
-        left: 50%;
-        margin: 0;
-        color: gold;
-        font-size: 36px;
-        cursor: default;
-
-        transition: all .5s ease-in-out;
-        opacity: 0;
-        &.show {
-          opacity: 1;
-        }
-      }
+      
       .date {
         position: absolute;
         top: 10px;

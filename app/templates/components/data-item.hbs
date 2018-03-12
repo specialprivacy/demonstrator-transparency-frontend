@@ -1,7 +1,6 @@
 {{paper-icon (if item.ok "check" "not interested") class=(concat "data-item-icon" (if item.ok " ok" " nok"))}}
 {{#paper-card class="card" as |card|}}
 
-  {{paper-icon "notifications" class=(if item.new "notification show" "notification")}}
   <span class="message">
     {{item.log}}
   </span>
