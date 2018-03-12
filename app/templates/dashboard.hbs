@@ -1,17 +1,13 @@
 <div class="layout-row layout-xs-column">
-  <div class="layout-column hidden-xs hidden-sm flex-25 layout-padding">
+  <div class="layout-column hidden-xs hidden-sm flex-25 layout-padding filters">
     {{#paper-card as |card|}}
       {{#paper-list}}
 
-        {{paper-divider}}
         {{#checkbox-filters items=sortedCompliances}}Compliance{{/checkbox-filters}}
-
         {{paper-divider}}
         {{#checkbox-filters items=sortedPurposes}}Purposes{{/checkbox-filters}}
-
         {{paper-divider}}
         {{#checkbox-filters items=sortedAttributes}}Attributes{{/checkbox-filters}}
-
         {{paper-divider}}
         {{#range-filters startDate=startDate endDate=endDate}}Time range{{/range-filters}}
 
@@ -20,8 +16,10 @@
 
   </div>
 
-  <div class="layout-column flex-50 layout-padding data-item-list">
+  <div class="layout-column">
     <div class="vertical-line" />
+  </div>
+  <div class="layout-column flex-50 layout-padding data-item-list">
 
     {{#each slicedData as |item|}}
       {{data-item item=item}}
@@ -29,7 +27,7 @@
 
   </div>
 
-  <div class="layout-column flex-25 layout-padding data-item-list">
+  <div class="layout-column flex-25 layout-padding visualizations">
     {{#paper-card as |card|}}
       {{#card.title as |title|}}
         {{#title.text as |text|}}
@@ -40,11 +38,11 @@
       {{#card.content}}
 
         {{#paper-subheader}}Compliance{{/paper-subheader}}
-        {{ember-chart type="bar" data=complianceChartData options=barChartOptions height=300 animate=true}}
+        {{ember-chart type="bar" data=complianceChartData options=barChartOptions height=260 animate=true}}
         {{paper-divider}}
 
-        {{#paper-subheader}}Violations per purpose{{/paper-subheader}}
-        {{ember-chart type="pie" data=purposeChartData options=pieChartOptions height=300 animate=true}}
+        {{#paper-subheader}}Purpose distribution{{/paper-subheader}}
+        {{ember-chart type="pie" data=purposeChartData options=pieChartOptions height=260 animate=true}}
         {{paper-divider}}
 
       {{/card.content}}

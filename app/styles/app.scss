@@ -1,4 +1,4 @@
-$primary: "cyan";
+$primary: "deep-purple";
 @import "color-palette";
 $color-cyan: map-merge($color-cyan, ('contrastDefaultColor' : $light-contrast-color));
 @import "ember-paper";
@@ -7,6 +7,9 @@ $color-cyan: map-merge($color-cyan, ('contrastDefaultColor' : $light-contrast-co
 @import "controller";
 @import "login";
 
+html,body {
+  height:100%;
+}
 
 .vflex-75 {
   height: 75%;
@@ -16,18 +19,25 @@ $color-cyan: map-merge($color-cyan, ('contrastDefaultColor' : $light-contrast-co
   position:fixed;
 }
 
-.data-item-list{
+div.vertical-line{
   position: relative;
+  top: 0;
+  left: 19px;
+  padding: 0;
+  width: 2px; /* Line width */
+  background-color: rgb(160, 178, 184); /* Line color */
+  height: 100%; /* Override in-line if you want specific height. */
+  margin-bottom: 10px;
+}
 
-  div.vertical-line{
-    position: absolute;
-    top: 0;
-    left: 18px;
-    padding: 0;
-    width: 2px; /* Line width */
-    background-color: rgb(160, 178, 184); /* Line color */
-    height: 100%; /* Override in-line if you want specific height. */
-  }
+.filters{
+  height: 100%;
+}
+
+.data-item-list{
+  overflow-y: scroll;
+  height: 90VH;
+  max-height: 90VH;
 
   .data-item {
     position: relative;
@@ -58,7 +68,7 @@ $color-cyan: map-merge($color-cyan, ('contrastDefaultColor' : $light-contrast-co
       .notification {
         position: absolute;
         left: 50%;
-        margin: 0px;
+        margin: 0;
         color: gold;
         font-size: 36px;
         cursor: default;
@@ -109,7 +119,29 @@ $color-cyan: map-merge($color-cyan, ('contrastDefaultColor' : $light-contrast-co
         background-color: #F44336;
       }
     }
-
-
   }
+}
+
+.visualizations{
+  height: 100%;
+}
+
+/* width */
+div.data-item-list::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+div.data-item-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+div.data-item-list::-webkit-scrollbar-thumb {
+  background: #00bcd4;
+}
+
+/* Handle on hover */
+div.data-item-list::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
