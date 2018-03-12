@@ -4,11 +4,9 @@
   {{#paper-list class="layout-column flex"}}
     {{#paper-item}}
       {{pikaday-input placeholder="From" maxDate=endDate value=startDate onSelection=(action (mut startDate))}}
-      <button {{action 'resetStartDate'}}>X</button>
     {{/paper-item}}
     {{#paper-item}}
       {{pikaday-input placeholder="To" minDate=startDate value=endDate onSelection=(action (mut endDate))}}
-      <button {{action 'resetEndDate'}}>X</button>
     {{/paper-item}}
   {{/paper-list}}
 
