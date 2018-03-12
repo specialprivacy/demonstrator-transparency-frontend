@@ -4,6 +4,7 @@ MAINTAINER Esteban Sastre <esteban.sastre@tenforce.com>
 MAINTAINER Aad Versteden <madnificent@gmail.com>
 
 COPY . /app
+RUN bower install
 RUN npm install
 RUN npm rebuild node-sass
 RUN ember build
