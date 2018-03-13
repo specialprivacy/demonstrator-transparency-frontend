@@ -74,42 +74,41 @@ div.vertical-line{
     .card {
       padding: 10px;
       margin: 10px;
+      font-size: 18px;
 
-      .event {
-        position: absolute;
-        top: 10px;
-        left: 50px;
+      .header {
         color: #9E9E9E;
         font-size: 12px;
-        margin: 20px 20px 20px;
+        .event {
+          float: left;
+        }
+        .date {
+          float: right;
+        }
       }
-      .date {
-        position: absolute;
-        top: 10px;
-        right: 10px;
+      .footer {
         color: #9E9E9E;
         font-size: 12px;
-        margin: 20px;
+        .policy {
+          float: right;
+        }
       }
       .message {
-        line-height: 75px;
+        line-height: 30px;
       }
-      .policy {
-        position: absolute;
-        bottom: 10px;
-        right: 10px;
-        color: #9E9E9E;
-        font-size: 12px;
-        margin: 20px;
-      }
+
       .attributes{
-        display: inline-block;
         ul {
+          display: inline-block;
+          -webkit-padding-start: 1%;
+          max-width: 80%;
+
           li {
             display: inline-block;
-            background-color: lightgray;
-            padding: 5px;
-            border-radius: 15px;
+            border: 1px solid rgb(103, 58, 183);
+            padding: 5px 10px;
+            margin: 5px;
+            border-radius: 10px;
           }
         }
       }

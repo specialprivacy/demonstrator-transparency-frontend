@@ -1,13 +1,14 @@
 {{paper-icon (if item.ok "check" "not interested") class=(concat "data-item-icon" (if item.ok " ok" " nok"))}}
 {{#paper-card class="card" as |card|}}
 
-  <span class="event">
-    Event "{{item.event}}"
-  </span>
-
-  <span class="date">
-    {{item.formattedTimestamp}}
-  </span>
+  <div class="header">
+    <span class="event">
+      Event "{{item.event}}"
+    </span>
+    <span class="date">
+      {{item.formattedTimestamp}}
+    </span>
+  </div>
 
   <div class="purpose">
     <h2>{{item.purposeLabel}}</h2>
@@ -18,7 +19,7 @@
   </div>
 
   <div class="attributes">
-    <label>Attributes: </label>
+    Attributes:
     <ul>
       {{#each item.attributesLabel as |label|}}
         <li>{{label}}</li>
@@ -26,10 +27,12 @@
     </ul>
   </div>
 
-  <div class="policy">
-    <label>Policy: </label>{{item.policy}}
+  <div class="footer">
+    <div class="policy">
+      Policy: {{item.policy}}
+    </div>
   </div>
 
 
-{{/paper-card}}
 
+{{/paper-card}}
