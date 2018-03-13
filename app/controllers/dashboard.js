@@ -3,6 +3,24 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
   dataRetriever: Ember.inject.service('data-retriever'),
 
+  handleMessage: function(e){
+    const _this = this;
+    const store = this.get('store');
+    var pushData = window.$.parseJSON(e.data);
+    var records = store.pushPayload('report', pushData);
+    let data = this.get('data');
+    records.forEach(function(record){
+      data.unshiftObject(record);
+      if(data.length > 200) {
+        let remove = data.get('lastObject');
+        data.removeObject(remove);
+        remove.unloadRecord();
+      }
+      _this.updateCharts(record);
+    });
+  },
+
+
   data: Ember.computed.alias('model'),
 
   // For every item in "data" array, checks if its "attribute" appears in the "check" array
@@ -22,13 +40,13 @@ export default Ember.Controller.extend({
   sortedPurposes: Ember.computed.sort('purposes', 'labelSorting'),
   sortedAttributes: Ember.computed.sort('attributes', 'labelSorting'),
 
-  checkedCompliances: Ember.computed.map('compliances.@each.enabled', function(item, index){
+  checkedCompliances: Ember.computed.map('compliances.@each.enabled', function(item){
     if(item.enabled) {return item.value;}
   }),
-  checkedPurposes: Ember.computed.map('purposes.@each.enabled', function(item, index){
+  checkedPurposes: Ember.computed.map('purposes.@each.enabled', function(item){
     if(item.enabled) {return item.value;}
   }),
-  checkedAttributes: Ember.computed.map('attributes.@each.enabled', function(item, index){
+  checkedAttributes: Ember.computed.map('attributes.@each.enabled', function(item){
     if(item.enabled) {return item.value;}
   }),
 
@@ -54,8 +72,8 @@ export default Ember.Controller.extend({
     start = this.get('startDate');
     end = this.get('endDate');
     return this.get('data').filter(function(item){
-      if(start && moment(item.get('timestamp')).isBefore(start, 'day')) return false;
-      if(end && moment(item.get('timestamp')).isAfter(end, 'day')) return false;
+      if(start && window.moment(item.get('timestamp')).isBefore(start, 'day')) return false;
+      if(end && window.moment(item.get('timestamp')).isAfter(end, 'day')) return false;
       return true;
     })
   }),
@@ -66,24 +84,40 @@ export default Ember.Controller.extend({
   sortedData: Ember.computed.sort('filteredData', 'dataSorting'),
 
   slicedData: Ember.computed('sortedData.length', function(){
-    return this.get('sortedData').slice(0, 20);
+    let data = this.get('sortedData').slice(0, 20);
+    //this.set('data', data);
+    return data;
   }),
 
 
   // Charts
-  okArray: Ember.computed.filter('data.@each.ok', function(item){
-    return item.get('ok');
-  }),
-  nokArray: Ember.computed.filter('data.@each.ok', function(item){
-    return !item.get('ok');
-  }),
-  okSum: Ember.computed.alias('okArray.length'),
-  nokSum: Ember.computed.alias('nokArray.length'),
-  complianceDataObserver: Ember.observer('nokSum', 'okSum', function(){
-    this.get('complianceChartData.datasets')[0].data[0] = this.get('nokSum');
-    this.get('complianceChartData.datasets')[0].data[1] = this.get('okSum');
+  updateCharts: function(record){
+    // update pie chart
+    if(!record.get('ok')){
+      // update nok count
+      this.get('complianceChartData.datasets')[0].data[0] = this.get('complianceChartData.datasets')[0].data[0] + 1;
+    }
+    else {
+      // update ok count
+      this.get('complianceChartData.datasets')[0].data[1] = this.get('complianceChartData.datasets')[0].data[1] + 1;
+    }
     this.notifyPropertyChange('complianceChartData');
-  }).on('init'),
+
+    // update bar char
+    switch(record.get('purpose')){
+      case "lifestyle":
+        this.get('purposeChartData.datasets')[0].data[0] = this.get('purposeChartData.datasets')[0].data[0] + 1;
+        break;
+      case "nutrition":
+        this.get('purposeChartData.datasets')[0].data[1] = this.get('purposeChartData.datasets')[0].data[1] + 1;
+        break;
+      case "activities":
+        this.get('purposeChartData.datasets')[0].data[2] = this.get('purposeChartData.datasets')[0].data[2] + 1;
+        break;
+    }
+    this.notifyPropertyChange('purposeChartData');
+  },
+
   complianceChartData:
   {
       datasets: [{
@@ -115,39 +149,6 @@ export default Ember.Controller.extend({
       }]
     }
   },
-  pieChartOptions: {
-    title:{
-      display: false
-    }
-  },
-
-  lifestyleArray: Ember.computed.filter('nokArray.@each.purpose', function(item){
-    return item.get('purpose') === 'lifestyle';
-  }),
-  nutritionArray: Ember.computed.filter('nokArray.@each.purpose', function(item){
-    return item.get('purpose') === 'nutrition';
-  }),
-  activitiesArray: Ember.computed.filter('nokArray.@each.purpose', function(item){
-    return item.get('purpose') === 'activities';
-  }),
-
-  lifestyleSum: Ember.computed.alias('lifestyleArray.length'),
-  nutritionSum: Ember.computed.alias('nutritionArray.length'),
-  activitiesSum: Ember.computed.alias('activitiesArray.length'),
-
-  lifestyleObserver: Ember.observer('lifestyleSum', function(){
-    this.get('purposeChartData.datasets')[0].data[0] = this.get('lifestyleSum');
-    this.notifyPropertyChange('purposeChartData');
-  }).on('init'),
-  nutritionObserver: Ember.observer('nutritionSum', function(){
-    this.get('purposeChartData.datasets')[0].data[1] = this.get('nutritionSum');
-    this.notifyPropertyChange('purposeChartData');
-  }).on('init'),
-  activitiesObserver: Ember.observer('activitiesSum', function(){
-    this.get('purposeChartData.datasets')[0].data[2] = this.get('activitiesSum');
-    this.notifyPropertyChange('purposeChartData');
-  }).on('init'),
-
 
   purposeChartData:
   {
@@ -161,6 +162,11 @@ export default Ember.Controller.extend({
 
       // These labels appear in the legend and in the tooltips when hovering different arcs
       labels: ["Lifestyle recommendations", "Nutrition recommendations", "Activities recommendations"]
+  },
+  pieChartOptions: {
+    title:{
+      display: false
+    }
   }
 
 

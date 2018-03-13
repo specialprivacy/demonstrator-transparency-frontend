@@ -44,6 +44,10 @@ export default DS.Model.extend({
     this._super(...arguments);
     let item = this;
     item.set('new', true);
-    Ember.run.later(function(){item.set('new', false)}, 3000);
+    Ember.run.later(function(){
+      if(!item.get('isDestroyed')){
+        item.set('new', false);
+      }
+    }, 3000);
   }
 });
