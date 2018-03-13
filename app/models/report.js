@@ -16,7 +16,7 @@ export default DS.Model.extend({
 
   log: Ember.computed('ok', 'user', 'event', function(){
     const check = this.get('ok') ? 'complied' : 'did not comply';
-    return `Event ${check} with the policy set by user ${this.get('user')}`;
+    return `Event ${check} with the policy set by user "${this.get('user')}".`;
   }),
   ok: Ember.computed('status', function() {
     return this.get('status').toLowerCase() === 'ok';
