@@ -74,7 +74,15 @@ div.vertical-line{
     .card {
       padding: 10px;
       margin: 10px;
-      
+
+      .event {
+        position: absolute;
+        top: 10px;
+        left: 50px;
+        color: #9E9E9E;
+        font-size: 12px;
+        margin: 20px 20px 20px;
+      }
       .date {
         position: absolute;
         top: 10px;
@@ -82,6 +90,9 @@ div.vertical-line{
         color: #9E9E9E;
         font-size: 12px;
         margin: 20px;
+      }
+      .message {
+        line-height: 75px;
       }
       .policy {
         position: absolute;
@@ -91,8 +102,16 @@ div.vertical-line{
         font-size: 12px;
         margin: 20px;
       }
-      .message {
-        line-height: 75px;
+      .attributes{
+        display: inline-block;
+        ul {
+          li {
+            display: inline-block;
+            background-color: lightgray;
+            padding: 5px;
+            border-radius: 15px;
+          }
+        }
       }
     }
     .data-item-icon {

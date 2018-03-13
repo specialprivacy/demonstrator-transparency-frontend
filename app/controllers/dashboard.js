@@ -1,6 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
+  dataRetriever: Ember.inject.service('data-retriever'),
+
   data: Ember.computed.alias('model'),
 
   // For every item in "data" array, checks if its "attribute" appears in the "check" array
@@ -11,14 +13,9 @@ export default Ember.Controller.extend({
     });
   },
 
-  compliances: [{label: "Compliant", value: true, enabled: true, icon: "check"}, {label: "Not compliant", value:false, enabled: true, icon: "not interested"}],
-  purposes: [{label: "Accounting", value: "accounting", enabled: true}, {label: "Administration", value:"administration", enabled: true}, {label: "Charity", value:"charity", enabled: true}, {label: "Tourist recommender app", value:"tourist", enabled: true}],
-  attributes: [
-    {label: "Birth date", value: "birth_date", enabled: true},
-    {label: "Location", value: "location", enabled: true},
-    {label: "Browsing history", value: "browsing_history", enabled: true},
-    {label: "Degree", value: "degree", enabled: true}
-  ],
+  compliances: Ember.computed.alias('dataRetriever.compliances'),
+  purposes: Ember.computed.alias('dataRetriever.purposes'),
+  attributes: Ember.computed.alias('dataRetriever.attributes'),
 
   labelSorting: ['label:asc'],
   sortedCompliances: Ember.computed.sort('compliances', 'labelSorting'),
@@ -124,54 +121,46 @@ export default Ember.Controller.extend({
     }
   },
 
-  accountingArray: Ember.computed.filter('nokArray.@each.purpose', function(item){
-    return item.get('purpose') === 'accounting';
+  lifestyleArray: Ember.computed.filter('nokArray.@each.purpose', function(item){
+    return item.get('purpose') === 'lifestyle';
   }),
-  administrationArray: Ember.computed.filter('nokArray.@each.purpose', function(item){
-    return item.get('purpose') === 'administration';
+  nutritionArray: Ember.computed.filter('nokArray.@each.purpose', function(item){
+    return item.get('purpose') === 'nutrition';
   }),
-  charityArray: Ember.computed.filter('nokArray.@each.purpose', function(item){
-    return item.get('purpose') === 'charity';
+  activitiesArray: Ember.computed.filter('nokArray.@each.purpose', function(item){
+    return item.get('purpose') === 'activities';
   }),
-  touristArray: Ember.computed.filter('nokArray.@each.purpose', function(item){
-    return item.get('purpose') === 'tourist';
-  }),
-  accountingSum: Ember.computed.alias('accountingArray.length'),
-  administrationSum: Ember.computed.alias('administrationArray.length'),
-  charitySum: Ember.computed.alias('charityArray.length'),
-  touristSum: Ember.computed.alias('touristArray.length'),
 
-  accountingObserver: Ember.observer('accountingSum', function(){
-    this.get('purposeChartData.datasets')[0].data[0] = this.get('accountingSum');
-    this.notifyPropertyChange('purposeChartData');
-  }).on('init'),
-  administrationObserver: Ember.observer('administrationSum', function(){
-    this.get('purposeChartData.datasets')[0].data[1] = this.get('administrationSum');
-    this.notifyPropertyChange('purposeChartData');
-  }).on('init'),
-  charityObserver: Ember.observer('charitySum', function(){
-    this.get('purposeChartData.datasets')[0].data[2] = this.get('charitySum');
-    this.notifyPropertyChange('purposeChartData');
-  }).on('init'),
-  touristObserver: Ember.observer('touristSum', function(){
-    this.get('purposeChartData.datasets')[0].data[3] = this.get('touristSum');
-    this.notifyPropertyChange('purposeChartData');
-  }).on('init'),
+  lifestyleSum: Ember.computed.alias('lifestyleArray.length'),
+  nutritionSum: Ember.computed.alias('nutritionArray.length'),
+  activitiesSum: Ember.computed.alias('activitiesArray.length'),
 
+  lifestyleObserver: Ember.observer('lifestyleSum', function(){
+    this.get('purposeChartData.datasets')[0].data[0] = this.get('lifestyleSum');
+    this.notifyPropertyChange('purposeChartData');
+  }).on('init'),
+  nutritionObserver: Ember.observer('nutritionSum', function(){
+    this.get('purposeChartData.datasets')[0].data[1] = this.get('nutritionSum');
+    this.notifyPropertyChange('purposeChartData');
+  }).on('init'),
+  activitiesObserver: Ember.observer('activitiesSum', function(){
+    this.get('purposeChartData.datasets')[0].data[2] = this.get('activitiesSum');
+    this.notifyPropertyChange('purposeChartData');
+  }).on('init'),
 
 
   purposeChartData:
   {
       datasets: [{
-        data: [0,0,0,0],
+        data: [0,0,0],
         backgroundColor: [
-         "#03A9F4", "#00BCD4", "#009688", "#2196F3"
+         "#03A9F4", "#00BCD4", "#009688"
          ],
         label: "Violations per purpose"
       }],
 
       // These labels appear in the legend and in the tooltips when hovering different arcs
-      labels: ["Accounting", "Administration", "Charity", "Tourist recommender app"]
+      labels: ["Lifestyle recommendations", "Nutrition recommendations", "Activities recommendations"]
   }
 
 

@@ -1,22 +1,35 @@
 {{paper-icon (if item.ok "check" "not interested") class=(concat "data-item-icon" (if item.ok " ok" " nok"))}}
 {{#paper-card class="card" as |card|}}
 
-  <span class="message">
-    {{item.log}}
-  </span>
-  <span class="purpose">
-    {{item.purpose}}
-  </span>
-  <span class="attributes">
-    {{item.attributes}}
-  </span>
-  <span class="policy">
-    {{item.policy}}
+  <span class="event">
+    Event "{{item.event}}"
   </span>
 
   <span class="date">
     {{item.formattedTimestamp}}
   </span>
+
+  <div class="purpose">
+    <h2>{{item.purposeLabel}}</h2>
+  </div>
+
+  <div class="message">
+    {{item.log}}
+  </div>
+
+  <div class="attributes">
+    <label>Attributes: </label>
+    <ul>
+      {{#each item.attributesLabel as |label|}}
+        <li>{{label}}</li>
+      {{/each}}
+    </ul>
+  </div>
+
+  <span class="policy">
+    {{item.policy}}
+  </span>
+
 
 {{/paper-card}}
 
