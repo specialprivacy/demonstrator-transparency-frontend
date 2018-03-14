@@ -1,8 +1,10 @@
-import Ember from 'ember';
 import DS from 'ember-data';
+import { inject } from '@ember/service';
+import { computed } from '@ember/object';
+import { later } from '@ember/runloop';
 
 export default DS.Model.extend({
-  dataRetriever: Ember.inject.service('data-retriever'),
+  dataRetriever: inject('data-retriever'),
 
   status: DS.attr('string'),
   timestamp: DS.attr('date'),
@@ -14,24 +16,24 @@ export default DS.Model.extend({
   event: DS.attr('string'),
 
 
-  log: Ember.computed('ok', 'user', 'event', function(){
+  log: computed('ok', 'user', 'event', function(){
     const check = this.get('ok') ? 'complied' : 'did not comply';
     return `Event ${check} with the policy set by user "${this.get('user')}".`;
   }),
-  ok: Ember.computed('status', function() {
+  ok: computed('status', function() {
     return this.get('status').toLowerCase() === 'ok';
   }),
-  formattedTimestamp: Ember.computed('timestamp', function(){
+  formattedTimestamp: computed('timestamp', function(){
     return window.moment(this.get('timestamp')).format('MMMM Do YYYY, h:mm:ss a');
   }),
 
-  complianceLabel: Ember.computed('ok', function(){
+  complianceLabel: computed('ok', function(){
     return this.get('dataRetriever').getPurpose(this.get('ok'));
   }),
-  purposeLabel: Ember.computed('purpose', function(){
+  purposeLabel: computed('purpose', function(){
     return this.get('dataRetriever').getPurpose(this.get('purpose'));
   }),
-  attributesLabel: Ember.computed('attributes.@each', function(){
+  attributesLabel: computed('attributes.@each', function(){
     const dataRetriever = this.get('dataRetriever');
     const attributes = this.get('attributes');
     let labels = attributes.map(function(item){
@@ -44,7 +46,7 @@ export default DS.Model.extend({
     this._super(...arguments);
     let item = this;
     item.set('new', true);
-    Ember.run.later(function(){
+    later(function(){
       if(!item.get('isDestroyed')){
         item.set('new', false);
       }

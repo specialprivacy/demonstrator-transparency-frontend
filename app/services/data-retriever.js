@@ -1,14 +1,18 @@
-import Ember from 'ember';
+import Service from '@ember/service';
 
-export default Ember.Service.extend({
-  compliances: [{label: "Compliant", value: true, enabled: true, icon: "check"}, {label: "Not compliant", value:false, enabled: true, icon: "not interested"}],
-  purposes: [{label: "Lifestyle recommendations", value: "lifestyle", enabled: true}, {label: "Nutrition recommendations", value:"nutrition", enabled: true}, {label: "Activities recommendations", value:"activities", enabled: true}],
-  attributes: [
-    {label: "Age", value: "age", enabled: true},
-    {label: "Calorie consumption", value: "calories", enabled: true},
-    {label: "Heart rate", value: "heart_rate", enabled: true},
-    {label: "Location", value: "location", enabled: true}
-  ],
+export default Service.extend({
+
+  init: function(){
+    this._super(...arguments);
+    this.set('compliances', [{label: "Compliant", value: true, enabled: true, icon: "check"}, {label: "Not compliant", value:false, enabled: true, icon: "not interested"}]);
+    this.set('purposes', [{label: "Lifestyle recommendations", value: "lifestyle", enabled: true}, {label: "Nutrition recommendations", value:"nutrition", enabled: true}, {label: "Activities recommendations", value:"activities", enabled: true}]);
+    this.set('attributes', [
+      {label: "Age", value: "age", enabled: true},
+      {label: "Calorie consumption", value: "calories", enabled: true},
+      {label: "Heart rate", value: "heart_rate", enabled: true},
+      {label: "Location", value: "location", enabled: true}
+    ]);
+  },
 
   getCompliance: function(id) {
     let array = this.get('compliances');

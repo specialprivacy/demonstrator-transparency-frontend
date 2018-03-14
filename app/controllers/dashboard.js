@@ -1,7 +1,13 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { inject } from '@ember/service';
+import { alias } from '@ember/object/computed';
+import { sort } from '@ember/object/computed';
+import { map } from '@ember/object/computed';
+import { intersect } from '@ember/object/computed';
+import { computed } from '@ember/object';
 
-export default Ember.Controller.extend({
-  dataRetriever: Ember.inject.service('data-retriever'),
+export default Controller.extend({
+  dataRetriever: inject('data-retriever'),
 
   handleMessage: function(e){
     const _this = this;
@@ -21,53 +27,53 @@ export default Ember.Controller.extend({
   },
 
 
-  data: Ember.computed.alias('model'),
+  data: alias('model'),
 
   // For every item in "data" array, checks if its "attribute" appears in the "check" array
   check: function(data, check, attribute){
     return data.filter(function(item){
       let attr = item["get"] ? item.get(attribute) : item[attribute];
-      return check.contains(attr)
+      return check.includes(attr)
     });
   },
 
-  compliances: Ember.computed.alias('dataRetriever.compliances'),
-  purposes: Ember.computed.alias('dataRetriever.purposes'),
-  attributes: Ember.computed.alias('dataRetriever.attributes'),
+  compliances: alias('dataRetriever.compliances'),
+  purposes: alias('dataRetriever.purposes'),
+  attributes: alias('dataRetriever.attributes'),
 
   labelSorting: ['label:asc'],
-  sortedCompliances: Ember.computed.sort('compliances', 'labelSorting'),
-  sortedPurposes: Ember.computed.sort('purposes', 'labelSorting'),
-  sortedAttributes: Ember.computed.sort('attributes', 'labelSorting'),
+  sortedCompliances: sort('compliances', 'labelSorting'),
+  sortedPurposes: sort('purposes', 'labelSorting'),
+  sortedAttributes: sort('attributes', 'labelSorting'),
 
-  checkedCompliances: Ember.computed.map('compliances.@each.enabled', function(item){
+  checkedCompliances: map('compliances.@each.enabled', function(item){
     if(item.enabled) {return item.value;}
   }),
-  checkedPurposes: Ember.computed.map('purposes.@each.enabled', function(item){
+  checkedPurposes: map('purposes.@each.enabled', function(item){
     if(item.enabled) {return item.value;}
   }),
-  checkedAttributes: Ember.computed.map('attributes.@each.enabled', function(item){
+  checkedAttributes: map('attributes.@each.enabled', function(item){
     if(item.enabled) {return item.value;}
   }),
 
-  dataCheckedByCompliance: Ember.computed('data.@each.ok', 'checkedCompliances.@each', function(){
+  dataCheckedByCompliance: computed('data.@each.ok', 'checkedCompliances.@each', function(){
     return this.check(this.get('data'), this.get('checkedCompliances'), 'ok');
   }),
-  dataCheckedByPurpose: Ember.computed('data.@each.purpose', 'checkedPurposes.@each', function(){
+  dataCheckedByPurpose: computed('data.@each.purpose', 'checkedPurposes.@each', function(){
     return this.check(this.get('data'), this.get('checkedPurposes'), 'purpose');
   }),
-  dataCheckedByAttributes: Ember.computed('data.@each.ok', 'checkedAttributes.@each', function(){
+  dataCheckedByAttributes: computed('data.@each.ok', 'checkedAttributes.@each', function(){
     let check = this.get('checkedAttributes');
     return this.get('data').filter(function(item){
       let attributes = item["get"] ? item.get("attributes") : item["attributes"];
       if(!attributes) return false;
       return attributes.any(function(attribute) {
-        return check.contains(attribute);
+        return check.includes(attribute);
       });
     });
   }),
 
-  timeRangeFilteredData: Ember.computed('startDate', 'endDate', 'data', function(){
+  timeRangeFilteredData: computed('startDate', 'endDate', 'data', function(){
     let start, end;
     start = this.get('startDate');
     end = this.get('endDate');
@@ -78,15 +84,13 @@ export default Ember.Controller.extend({
     })
   }),
 
-  filteredData: Ember.computed.intersect('dataCheckedByCompliance', 'dataCheckedByPurpose', 'dataCheckedByAttributes'/* TODO, 'timeRangeFilteredData'*/),
+  filteredData: intersect('dataCheckedByCompliance', 'dataCheckedByPurpose', 'dataCheckedByAttributes'/* TODO, 'timeRangeFilteredData'*/),
 
   dataSorting: ['timestamp:desc', 'log:asc'],
-  sortedData: Ember.computed.sort('filteredData', 'dataSorting'),
+  sortedData: sort('filteredData', 'dataSorting'),
 
-  slicedData: Ember.computed('sortedData.length', function(){
-    let data = this.get('sortedData').slice(0, 20);
-    //this.set('data', data);
-    return data;
+  slicedData: computed('sortedData.length', function(){
+    return this.get('sortedData').slice(0, 20);
   }),
 
 

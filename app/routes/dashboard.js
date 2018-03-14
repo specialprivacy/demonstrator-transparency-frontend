@@ -1,6 +1,7 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
+import { A } from '@ember/array';
 
-export default Ember.Route.extend({
+export default Route.extend({
   activate: function() {
     // when entering the route
     // if there is no eventSource
@@ -21,7 +22,7 @@ export default Ember.Route.extend({
   model: function() {
     // load all previous reports from the store
     return this.get('store').findAll('report').then(reports => {
-      let model = Ember.A();
+      let model = A();
       reports.sortBy('timestamp:desc').forEach(report => {
         model.pushObject(report);
       });
@@ -34,6 +35,6 @@ export default Ember.Route.extend({
 
     model.forEach(report => {
       controller.updateCharts(report);
-    })
+    });
   }
 });

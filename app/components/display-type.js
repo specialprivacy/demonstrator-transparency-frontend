@@ -1,8 +1,9 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: '',
-  componentName: Ember.computed('item.informationType.name', function(){
+  componentName: computed('item.informationType.name', function(){
     return "displayers/display-"+this.get('item.informationType.name');
   })
 });

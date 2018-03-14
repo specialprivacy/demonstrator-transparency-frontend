@@ -1,13 +1,14 @@
-import Ember from 'ember';
 import Transform from 'ember-data/transform';
+import { assert } from '@ember/debug';
+import { typeOf } from '@ember/utils';
 
 const StringSetTransform = Transform.extend({
   deserialize(serialized) {
-    Ember.assert(`expected array got ${Ember.typeOf(serialized)}`, (!serialized) || (Ember.typeOf(serialized) === "array"));
+    assert(`expected array got ${typeOf(serialized)}`, (!serialized) || (typeOf(serialized) === "array"));
     return serialized || [];
   },
   serialize(deserialized) {
-    Ember.assert(`expected array got ${Ember.typeOf(deserialized)}`, (!deserialized) || (Ember.typeOf(deserialized) === "array"));
+    assert(`expected array got ${typeOf(deserialized)}`, (!deserialized) || (typeOf(deserialized) === "array"));
     return deserialized || [];
   }});
 export default StringSetTransform;
