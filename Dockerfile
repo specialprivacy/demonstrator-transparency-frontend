@@ -4,8 +4,7 @@ MAINTAINER Esteban Sastre <esteban.sastre@tenforce.com>
 MAINTAINER Aad Versteden <madnificent@gmail.com>
 
 COPY . /app
-ENV GIT_DIR=/app
-RUN bower install
+RUN if [ -f "/app/bower.json" ]; then export GIT_DIR=/app; bower install; fi
 RUN npm install
 RUN npm rebuild node-sass
 RUN ember build
