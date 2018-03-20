@@ -1,6 +1,7 @@
-$primary: "deep-purple";
+$primary: "teal";
 @import "color-palette";
-$color-cyan: map-merge($color-cyan, ('contrastDefaultColor' : $light-contrast-color));
+$color-teal: map-merge($color-teal, ('default':  '600'));
+
 @import "ember-paper";
 @import "ember-power-calendar";
 @import "default";
@@ -38,7 +39,9 @@ div.vertical-line{
 }
 
 .filters{
-  height: 100%;
+  height: 90VH;
+  max-height: 90VH !important;
+  overflow: auto;
 }
 
 .data-item-list{
@@ -134,7 +137,9 @@ div.vertical-line{
 }
 
 .visualizations{
-  height: 100%;
+  height: 90VH;
+  max-height: 90VH !important;
+  overflow: auto;
 }
 
 /* width */
@@ -145,12 +150,12 @@ div.data-item-list::-webkit-scrollbar {
 
 /* Track */
 div.data-item-list::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: color($primary, "100");
 }
 
 /* Handle */
 div.data-item-list::-webkit-scrollbar-thumb {
-  background: rgb(103, 58, 183);
+  background: color($primary, "600");
 }
 
 /* Handle on hover */
