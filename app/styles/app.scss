@@ -5,8 +5,6 @@ $color-teal: map-merge($color-teal, ('default':  '600'));
 @import "ember-paper";
 @import "ember-power-calendar";
 @import "default";
-@import "controller";
-@import "login";
 
 html,body {
   height:100%;
