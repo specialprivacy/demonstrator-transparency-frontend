@@ -4,7 +4,7 @@ module.exports = function(environment) {
   let ENV = {
     modulePrefix: 'special-demo-ui',
     environment,
-    rootURL: '/',
+    rootURL: 'policy-crud/',
     locationType: 'auto',
     EmberENV: {
       FEATURES: {
