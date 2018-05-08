@@ -2,9 +2,9 @@
 
 module.exports = function(environment) {
   let ENV = {
-    modulePrefix: 'special-demo-ui',
+    modulePrefix: 'transparency-frontend',
     environment,
-    rootURL: 'transparency/',
+    rootURL: '/transparency/',
     locationType: 'auto',
     EmberENV: {
       FEATURES: {

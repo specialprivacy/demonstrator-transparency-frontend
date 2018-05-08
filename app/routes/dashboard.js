@@ -8,7 +8,8 @@ export default Route.extend({
     // create one and connect to the server
     if (! this.eventSource) {
       const controller = this.controllerFor('dashboard');
-      this.eventSource = new EventSource('/push-tester/connect').addEventListener('message', controller.handleMessage.bind(controller));
+      // TODO: generate random client id?
+      this.eventSource = new EventSource('/transparency-backend/connect?clientId=transparency-frontend').addEventListener('message', controller.handleMessage.bind(controller));
     }
   },
   deactivate: function(){
@@ -20,14 +21,7 @@ export default Route.extend({
     }
   },
   model: function() {
-    // load all previous reports from the store
-    return this.get('store').findAll('report').then(reports => {
-      let model = A();
-      reports.sortBy('timestamp:desc').forEach(report => {
-        model.pushObject(report);
-      });
-      return model;
-    });
+    return this.get('store').peekAll('report')
   },
 
   setupController: function(controller, model) {

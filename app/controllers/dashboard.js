@@ -14,14 +14,7 @@ export default Controller.extend({
     const store = this.get('store');
     var pushData = window.$.parseJSON(e.data);
     var records = store.pushPayload('report', pushData);
-    let data = this.get('data');
     records.forEach(function(record){
-      data.unshiftObject(record);
-      if(data.length > 200) {
-        let remove = data.get('lastObject');
-        data.removeObject(remove);
-        remove.unloadRecord();
-      }
       _this.updateCharts(record);
     });
   },
