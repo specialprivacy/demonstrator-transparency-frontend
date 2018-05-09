@@ -2,34 +2,59 @@
 {{#paper-card class="card" as |card|}}
 
   <div class="header">
-    <span class="event">
-      Event "{{item.event}}"
-    </span>
     <span class="date">
       {{item.formattedTimestamp}}
     </span>
   </div>
 
-  <div class="purpose">
-    <h2>{{item.purposeLabel}}</h2>
+  <div class="process">
+    <h2>{{item.process}}</h2>
   </div>
 
   <div class="message">
-    {{item.log}}
+    {{item.message}}
   </div>
 
-  <div class="attributes">
-    Attributes:
+  <div class="list">
+    Purpose:
     <ul>
-      {{#each item.attributesLabel as |label|}}
-        <li>{{label}}</li>
+      <li>{{item.purpose}}</li>
+    </ul>
+  </div>
+
+  <div class="list">
+    Processing:
+    <ul>
+      <li>{{item.processing}}</li>
+    </ul>
+  </div>
+
+  <div class="list">
+    Recipient:
+    <ul>
+      <li>{{item.recipient}}</li>
+    </ul>
+  </div>
+
+  <div class="list">
+    Storage:
+    <ul>
+      <li>{{item.storage}}</li>
+    </ul>
+  </div>
+
+  <div class="list">
+    Data:
+    <ul>
+      {{#each item.dataCollection as |data|}}
+        <li>{{data}}</li>
       {{/each}}
     </ul>
   </div>
 
   <div class="footer">
-    <div class="policy">
-      Policy "{{item.policy}}"
+    <div class="item-id">
+      Event "{{item.id}}"
     </div>
   </div>
 

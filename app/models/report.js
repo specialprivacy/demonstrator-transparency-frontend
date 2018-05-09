@@ -4,7 +4,26 @@ import { computed } from '@ember/object';
 import { later } from '@ember/runloop';
 
 export default DS.Model.extend({
-  dataRetriever: inject('data-retriever'),
+  timestamp: DS.attr("date"),
+  process: DS.attr("string"),
+  purpose: DS.attr("string"),
+  processing: DS.attr("string"),
+  recipient: DS.attr("string"),
+  storage: DS.attr("string"),
+  userID: DS.attr("string"),
+  dataCollection: DS.attr("string-set"),
+  hasConsent: DS.attr("boolean"),
+
+  message: computed("hasConsent", "process", "userId", function(){
+    const check = this.get('hasConsent') ? 'complied' : 'did not comply';
+    return `Process [${this.get("process")}] ${check} with the policy set by user "${this.get("userID")}".`;
+  }),
+  formattedTimestamp: computed('timestamp', function(){
+    return window.moment(this.get('timestamp')).format('MMMM Do YYYY, h:mm:ss a');
+  }),
+
+
+  /*dataRetriever: inject('data-retriever'),
 
   status: DS.attr('string'),
   timestamp: DS.attr('date'),
@@ -40,7 +59,7 @@ export default DS.Model.extend({
       return dataRetriever.getAttribute(item);
     });
     return labels;
-  }),
+  }),*/
 
   init: function() {
     this._super(...arguments);

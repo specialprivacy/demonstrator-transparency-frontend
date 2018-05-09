@@ -1,6 +1,0 @@
-{{#if (is-component componentName)}}
-  {{component componentName item=item}}
-{{else}}
-  <p>There is no display for this type, defaulting to text.</p>
-  {{component "displayers/display-text" item=item}}
-{{/if}}
