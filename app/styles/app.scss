@@ -1,17 +1,18 @@
 $primary: "teal";
 @import "color-palette";
-$color-teal: map-merge($color-teal, ('default':  '600'));
-
+$color-teal: map-merge($color-teal, ('default': '600'));
 @import "ember-paper";
 @import "ember-power-calendar";
 @import "default";
 
-html,body {
-  height:100%;
+body,
+html {
+  height: 100%;
 }
 
-.logo{
+.logo {
   text-align: right;
+
   img {
     width: 6%;
   }
@@ -22,30 +23,62 @@ html,body {
 }
 
 .position-fixed {
-  position:fixed;
+  position: fixed;
 }
 
-div.vertical-line{
+div.vertical-line {
   position: relative;
   top: 0;
   left: 19px;
   padding: 0;
-  width: 2px; /* Line width */
-  background-color: rgb(160, 178, 184); /* Line color */
-  height: 100%; /* Override in-line if you want specific height. */
+  width: 2px;
+  /* Line width */
+  background-color: rgb(160, 178, 184);
+  /* Line color */
+  height: 100%;
+  /* Override in-line if you want specific height. */
   margin-bottom: 10px;
 }
 
-.filters{
+.filters {
   height: 90VH;
   max-height: 90VH !important;
   overflow: auto;
 }
 
-.data-item-list{
+.checkbox-filter_activator {
+  cursor: pointer;
+  md-icon {
+    padding-bottom: 25px;
+  }
+  .md-subheader {
+    display: inline-block;
+    &-inner {
+      padding-left: 0;
+    }
+  }
+}
+
+.data-item-list {
   overflow-y: scroll;
   height: 90VH;
   max-height: 90VH;
+  /* width */
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: color($primary, "100");
+  }
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: color($primary, "600");
+  }
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
 
   .data-item {
     position: relative;
@@ -53,9 +86,8 @@ div.vertical-line{
 
     &.new {
       opacity: 0;
-      animation: new-item-animation .3s linear forwards;
+      animation: new-item-animation 0.3s linear forwards;
     }
-
     @keyframes new-item-animation {
       from {
         opacity: 0;
@@ -64,10 +96,9 @@ div.vertical-line{
 
       to {
         opacity: 1;
-        transform : translateY(0);
+        transform: translateY(0);
       }
     }
-
 
     .card {
       padding: 10px;
@@ -77,25 +108,30 @@ div.vertical-line{
       .header {
         color: #9E9E9E;
         font-size: 12px;
+
         .event {
           float: left;
         }
+
         .date {
           float: right;
         }
       }
+
       .footer {
         color: #9E9E9E;
         font-size: 12px;
+
         .item-id {
           float: right;
         }
       }
+
       .message {
         line-height: 30px;
       }
 
-      .list{
+      .list {
         ul {
           display: inline-block;
           -webkit-padding-start: 1%;
@@ -111,8 +147,9 @@ div.vertical-line{
         }
       }
     }
+
     .data-item-icon {
-      transition: all .5s ease-in-out;
+      transition: all 0.5s ease-in-out;
       position: absolute;
       top: 42%;
       left: -10px;
@@ -124,9 +161,11 @@ div.vertical-line{
       padding-top: 5px;
       border: 2px solid white;
       color: white;
+
       &.ok {
         background-color: #4CAF50;
       }
+
       &.nok {
         background-color: #F44336;
       }
@@ -134,29 +173,8 @@ div.vertical-line{
   }
 }
 
-.visualizations{
+.visualizations {
   height: 90VH;
   max-height: 90VH !important;
   overflow: auto;
-}
-
-/* width */
-div.data-item-list::-webkit-scrollbar {
-  width: 10px;
-
-}
-
-/* Track */
-div.data-item-list::-webkit-scrollbar-track {
-  background: color($primary, "100");
-}
-
-/* Handle */
-div.data-item-list::-webkit-scrollbar-thumb {
-  background: color($primary, "600");
-}
-
-/* Handle on hover */
-div.data-item-list::-webkit-scrollbar-thumb:hover {
-  background: #555;
 }

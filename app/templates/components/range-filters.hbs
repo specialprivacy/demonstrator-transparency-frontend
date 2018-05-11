@@ -1,21 +1,30 @@
-{{#paper-subheader}}{{yield}}{{/paper-subheader}}
-{{#paper-item as |controls|}}
+<div {{action "showCheckboxesAction"}} class="checkbox-filter_activator">
+  {{#if showCheckboxes}}
+    {{paper-icon "keyboard_arrow_down" class="flex"}}
+  {{else}}
+    {{paper-icon "keyboard_arrow_right" class="flex"}}
+  {{/if}}
+  {{#paper-subheader}}{{yield}}{{/paper-subheader}}
+</div>
+{{#if showCheckboxes}}
+  {{#paper-item as |controls|}}
 
-  {{#paper-list class="layout-column flex"}}
-    {{#paper-item}}
-      {{pikaday-input placeholder="From" maxDate=endDate value=startDate onSelection=(action (mut startDate))}}
-    {{/paper-item}}
-    {{#paper-item}}
-      {{pikaday-input placeholder="To" minDate=startDate value=endDate onSelection=(action (mut endDate))}}
-    {{/paper-item}}
-  {{/paper-list}}
+    {{#paper-list class="layout-column flex" }}
+      {{#paper-item}}
+        {{pikaday-input placeholder="From" maxDate=endDate value=startDate onSelection=(action (mut startDate))}}
+      {{/paper-item}}
+      {{#paper-item}}
+        {{pikaday-input placeholder="To" minDate=startDate value=endDate onSelection=(action (mut endDate))}}
+      {{/paper-item}}
+    {{/paper-list}}
 
-  <div class="md-secondary-container">
-    {{#controls.button iconButton=true secondary=true}}
-    {{paper-icon "info" class="flex"}}
-    {{#paper-tooltip position="top"}}
-      Select a time range to review data from a specific time period.
-    {{/paper-tooltip}}
-  {{/controls.button}}
-  </div>
-{{/paper-item}}
+    <div class="md-secondary-container">
+      {{#controls.button iconButton=true secondary=true}}
+        {{paper-icon "info" class="flex"}}
+        {{#paper-tooltip position="top" }}
+          Select a time range to review data from a specific time period.
+        {{/paper-tooltip}}
+      {{/controls.button}}
+    </div>
+  {{/paper-item}}
+{{/if}}
