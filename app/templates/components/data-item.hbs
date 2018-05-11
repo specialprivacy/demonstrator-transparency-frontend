@@ -15,36 +15,46 @@
     {{item.message}}
   </div>
 
-  <div class="list">
-    Purpose:
+  <div class="data-item-sublist">
+    <div class="data-item-sublist_label">
+      Purpose:
+    </div>
     <ul>
       <li>{{item.purpose}}</li>
     </ul>
   </div>
 
-  <div class="list">
-    Processing:
+  <div class="data-item-sublist">
+    <div class="data-item-sublist_label">
+      Processing:
+    </div>
     <ul>
       <li>{{item.processing}}</li>
     </ul>
   </div>
 
-  <div class="list">
-    Recipient:
+  <div class="data-item-sublist">
+    <div class="data-item-sublist_label">
+      Recipient:
+    </div>
     <ul>
       <li>{{item.recipient}}</li>
     </ul>
   </div>
 
-  <div class="list">
-    Storage:
+  <div class="data-item-sublist">
+    <div class="data-item-sublist_label">
+      Storage:
+    </div>
     <ul>
       <li>{{item.storage}}</li>
     </ul>
   </div>
 
-  <div class="list">
-    Data:
+  <div class="data-item-sublist">
+    <div class="data-item-sublist_label">
+      Data:
+    </div>
     <ul>
       {{#each item.dataCollection as |data|}}
         <li>{{data}}</li>

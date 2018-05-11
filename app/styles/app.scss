@@ -48,11 +48,14 @@ div.vertical-line {
 
 .checkbox-filter_activator {
   cursor: pointer;
+
   md-icon {
     padding-bottom: 25px;
   }
+
   .md-subheader {
     display: inline-block;
+
     &-inner {
       padding-left: 0;
     }
@@ -101,7 +104,7 @@ div.vertical-line {
     }
 
     .card {
-      padding: 10px;
+      padding: 10px 10px 10px 20px;
       margin: 10px;
       font-size: 18px;
 
@@ -121,6 +124,7 @@ div.vertical-line {
       .footer {
         color: #9E9E9E;
         font-size: 12px;
+        margin-top: 10px;
 
         .item-id {
           float: right;
@@ -129,22 +133,6 @@ div.vertical-line {
 
       .message {
         line-height: 30px;
-      }
-
-      .list {
-        ul {
-          display: inline-block;
-          -webkit-padding-start: 1%;
-          max-width: 80%;
-
-          li {
-            display: inline-block;
-            border: 1px solid rgb(103, 58, 183);
-            padding: 5px 10px;
-            margin: 5px;
-            border-radius: 10px;
-          }
-        }
       }
     }
 
@@ -168,6 +156,36 @@ div.vertical-line {
 
       &.nok {
         background-color: #F44336;
+      }
+    }
+
+    .data-item-sublist {
+      border-top: 1px solid #eee;
+
+      &:nth-of-type(4) {
+        border-top: none;
+      }
+
+      &_label {
+        display: inline-block;
+        height: 100%;
+        min-width: 100px;
+        vertical-align: top;
+        padding-top: 29px;
+      }
+
+      ul {
+        display: inline-block;
+        -webkit-padding-start: 1%;
+        max-width: 80%;
+        // margin-bottom: 0;
+        li {
+          display: inline-block;
+          border: 1px solid rgb(103, 58, 183);
+          padding: 5px 10px;
+          margin: 5px;
+          border-radius: 10px;
+        }
       }
     }
   }
