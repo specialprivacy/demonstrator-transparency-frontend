@@ -44,6 +44,9 @@ div.vertical-line {
   height: 90VH;
   max-height: 90VH !important;
   overflow: auto;
+  md-card {
+    display: block;
+  }
 }
 
 .checkbox-filter_activator {
@@ -59,6 +62,23 @@ div.vertical-line {
     &-inner {
       padding-left: 0;
     }
+  }
+}
+
+md-list {
+  width: inherit;
+
+  &-item {
+    .md-list-item-inner {
+      width: 100%;
+      p {
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+  input {
+    width: 100%;
   }
 }
 
