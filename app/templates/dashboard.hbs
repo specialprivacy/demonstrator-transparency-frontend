@@ -7,8 +7,8 @@
         {{paper-divider}}
         {{#checkbox-filters items=sortedDataCollection}}Data{{/checkbox-filters}}
         {{paper-divider}}
-        {{#checkbox-filters items=sortedLocations}}Storage location{{/checkbox-filters}}
-        {{paper-divider}}
+        {{!#checkbox-filters items=sortedLocations}}<!--Storage location-->{{!/checkbox-filters}}
+        {{!paper-divider}}
         {{#checkbox-filters items=sortedProcesses}}Process{{/checkbox-filters}}
         {{paper-divider}}
         {{#checkbox-filters items=sortedPurposes}}Purpose{{/checkbox-filters}}

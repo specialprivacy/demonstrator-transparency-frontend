@@ -68,7 +68,8 @@ export default Controller.extend({
             return item.get("dataCollection").includes(element)
           })
         ) { return false; }
-        if(!checkedLocations.includes(item.get("storage"))) return false;
+        // TODO: Disabled for now as there are incertitudes regarding duration/location/storage
+        //if(!checkedLocations.includes(item.get("storage"))) return false;
         if(!checkedProcesses.includes(item.get("processing"))) return false;
         if(!checkedPurposes.includes(item.get("purpose"))) return false;
         if(!checkedRecipients.includes(item.get("recipient"))) return false;
