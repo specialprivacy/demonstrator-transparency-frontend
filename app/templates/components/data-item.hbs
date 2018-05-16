@@ -1,4 +1,4 @@
-{{paper-icon (if item.ok "check" "not interested") class=(concat "data-item-icon" (if item.ok " ok" " nok"))}}
+{{paper-icon (if item.hasConsent "check" "not interested") class=(concat "data-item-icon" (if item.hasConsent " ok" " nok"))}}
 {{#paper-card class="card" as |card|}}
 
   <div class="header">
