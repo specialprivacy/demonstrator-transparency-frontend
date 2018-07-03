@@ -10,7 +10,7 @@ stages:
 
 variables:
   # REGISTRY_ENDPOINT=${CI_REGISTRY_IMAGE} # Use this when deployed on gitlab.com
-  REGISTRY_ENDPOINT: specialregistry.wdullaer.com
+  REGISTRY_ENDPOINT: registry-special.tenforce.com
   IMAGE_NAME: ${REGISTRY_ENDPOINT}/special/overview-ui
 
 before_script:
