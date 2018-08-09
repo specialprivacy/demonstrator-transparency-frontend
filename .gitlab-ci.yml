@@ -11,7 +11,7 @@ stages:
 variables:
   # REGISTRY_ENDPOINT=${CI_REGISTRY_IMAGE} # Use this when deployed on gitlab.com
   REGISTRY_ENDPOINT: registry-special.tenforce.com
-  IMAGE_NAME: ${REGISTRY_ENDPOINT}/special/overview-ui
+  IMAGE_NAME: ${REGISTRY_ENDPOINT}/special/demonstrator-transparency-frontend
 
 before_script:
   # - docker login -u gitlab-ci-token -p ${CI_JOB_TOKEN} registry.gitlab.com # Use this when deployed on gitlab.com
