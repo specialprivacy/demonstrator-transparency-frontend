@@ -13,6 +13,7 @@ export default DS.Model.extend({
   userID: DS.attr("string"),
   dataCollection: DS.attr("string-set"),
   hasConsent: DS.attr("boolean"),
+  eventID: DS.attr("string"),
 
   message: computed("hasConsent", "process", "userId", function(){
     const check = this.get('hasConsent') ? 'complied' : 'did not comply';

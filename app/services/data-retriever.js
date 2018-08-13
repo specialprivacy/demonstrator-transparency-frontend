@@ -1,7 +1,7 @@
 import Service from '@ember/service';
 
 export default Service.extend({
-  
+
   getCompliance: function(id) {
     let array = this.get('dataCollections');
     let res = array.filter(function(item){
@@ -60,7 +60,7 @@ export default Service.extend({
     {"label":"UniqueId", "value":"http://www.specialprivacy.eu/vocabs/data#UniqueId", "enabled": true}
   ],
 
-  locationCollections: [
+  storageCollections: [
     {"label": "AnyLocation", "value": "http://www.specialprivacy.eu/langs/usage-policy#AnyLocation", "enabled": true},
     {"label": "ControllerServers", "value": "http://www.specialprivacy.eu/vocabs/locations#ControllerServers", "enabled": true},
     {"label": "EU", "value": "http://www.specialprivacy.eu/vocabs/locations#EU", "enabled": true},
@@ -71,7 +71,7 @@ export default Service.extend({
     {"label": "ThirdParty", "value": "http://www.specialprivacy.eu/vocabs/locations#ThirdParty", "enabled": true}
   ],
 
-  processCollections: [
+  processingCollections: [
     {"label": "AnyProcessing", "value": "http://www.specialprivacy.eu/langs/usage-policy#AnyProcessing", "enabled": true},
     {"label": "Aggregate", "value": "http://www.specialprivacy.eu/vocabs/processing#Aggregate", "enabled": true},
     {"label": "Analyze", "value": "http://www.specialprivacy.eu/vocabs/processing#Analyze", "enabled": true},

@@ -25,23 +25,23 @@ export default Controller.extend({
 
   compliances: alias("dataRetriever.compliances"),
   dataCollections: alias("dataRetriever.dataCollections"),
-  locations: alias("dataRetriever.locationCollections"),
-  processes: alias("dataRetriever.processCollections"),
+  storages: alias("dataRetriever.storageCollections"),
+  processings: alias("dataRetriever.processingCollections"),
   purposes: alias("dataRetriever.purposeCollections"),
   recipients: alias("dataRetriever.recipientCollections"),
 
   labelSorting: ["label:asc"],
   sortedCompliances: sort("compliances", "labelSorting"),
   sortedDataCollection: sort("dataCollections", "labelSorting"),
-  sortedLocations: sort("locations", "labelSorting"),
-  sortedProcesses: sort("processes", "labelSorting"),
+  sortedStorages: sort("storages", "labelSorting"),
+  sortedProcessings: sort("processings", "labelSorting"),
   sortedPurposes: sort("purposes", "labelSorting"),
   sortedRecipients: sort("recipients", "labelSorting"),
 
   checkedCompliances: map("compliances.@each.enabled", mapEnabled),
   checkedDataCollection: map("dataCollections.@each.enabled", mapEnabled),
-  checkedLocations: map("locations.@each.enabled", mapEnabled),
-  checkedProcesses: map("processes.@each.enabled", mapEnabled),
+  checkedStorages: map("storages.@each.enabled", mapEnabled),
+  checkedProcessings: map("processings.@each.enabled", mapEnabled),
   checkedPurposes: map("purposes.@each.enabled", mapEnabled),
   checkedRecipients: map("recipients.@each.enabled", mapEnabled),
 
@@ -49,16 +49,16 @@ export default Controller.extend({
   filteredData: Ember.computed("data.@each",
     "checkedCompliances.@each",
     "checkedDataCollection.@each",
-    "checkedLocations.@each",
-    "checkedProcesses.@each",
+    "checkedStorages.@each",
+    "checkedProcessings.@each",
     "checkedPurposes.@each",
     "checkedRecipients.@each",
     function() {
       // Let's filter out items that do not follow search criterias
       const checkedCompliances = this.get("checkedCompliances");
       const checkedDataCollection = this.get("checkedDataCollection");
-      const checkedLocations = this.get("checkedLocations");
-      const checkedProcesses = this.get("checkedProcesses");
+      const checkedStorages = this.get("checkedStorages");
+      const checkedProcessings = this.get("checkedProcessings");
       const checkedPurposes = this.get("checkedPurposes");
       const checkedRecipients = this.get("checkedRecipients");
       return this.get("data").filter(function(item) {
@@ -68,9 +68,8 @@ export default Controller.extend({
             return item.get("dataCollection").includes(element)
           })
         ) { return false; }
-        // TODO: Disabled for now as there are incertitudes regarding duration/location/storage
-        //if(!checkedLocations.includes(item.get("storage"))) return false;
-        if(!checkedProcesses.includes(item.get("processing"))) return false;
+        if(!checkedStorages.includes(item.get("storage"))) return false;
+        if(!checkedProcessings.includes(item.get("processing"))) return false;
         if(!checkedPurposes.includes(item.get("purpose"))) return false;
         if(!checkedRecipients.includes(item.get("recipient"))) return false;
         return true;
@@ -104,7 +103,7 @@ export default Controller.extend({
   dataCheckedByAttributes: computed("data.@each.ok", "checkedAttributes.@each", function(){
     let check = this.get("checkedAttributes");
     return this.get("data").filter(function(item){
-      let attributes = item["get"] ? item.get("attributes") : item["processes"];
+      let attributes = item["get"] ? item.get("attributes") : item["processings"];
       if(!attributes) return false;
       return attributes.any(function(attribute) {
         return check.includes(attribute);
