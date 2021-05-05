@@ -3,12 +3,11 @@ import { inject } from "@ember/service";
 import { alias } from "@ember/object/computed";
 import { sort } from "@ember/object/computed";
 import { map } from "@ember/object/computed";
-import { intersect } from "@ember/object/computed";
 import { computed } from "@ember/object";
 
 let mapEnabled = function(item) {
   if(item.enabled) { return item.value; }
-}
+};
 
 export default Controller.extend({
   dataRetriever: inject("data-retriever"),
@@ -30,7 +29,9 @@ export default Controller.extend({
   purposes: alias("dataRetriever.purposeCollections"),
   recipients: alias("dataRetriever.recipientCollections"),
 
-  labelSorting: ["label:asc"],
+  labelSorting: computed(function(){
+    return ["label:asc"];
+  }),
   sortedCompliances: sort("compliances", "labelSorting"),
   sortedDataCollection: sort("dataCollections", "labelSorting"),
   sortedStorages: sort("storages", "labelSorting"),
@@ -46,7 +47,7 @@ export default Controller.extend({
   checkedRecipients: map("recipients.@each.enabled", mapEnabled),
 
 
-  filteredData: Ember.computed("data.@each",
+  filteredData: computed("data.@each",
     "checkedCompliances.@each",
     "checkedDataCollection.@each",
     "checkedStorages.@each",
@@ -95,7 +96,6 @@ export default Controller.extend({
         return checkedData.includes(element);
       });
     });
-    return this.check(this.get("data"), this.get("checkedData"), "hasConsent");
   }),
   dataCheckedByPurpose: computed("data.@each.purpose", "checkedPurposes.@each", function(){
     return this.check(this.get("data"), this.get("checkedPurposes"), "purpose");
@@ -121,10 +121,10 @@ export default Controller.extend({
       return true;
     })
   }),
-
-  //filteredData: intersect("dataCheckedByCompliance", "dataCheckedByPurpose", "dataCheckedByAttributes"/* TODO, "timeRangeFilteredData"*/),
-
-  dataSorting: ["timestamp:desc", "message:asc"],
+  
+  dataSorting: computed(function(){
+    return ["timestamp:desc", "message:asc"];
+  }),
   sortedData: sort("filteredData", "dataSorting"),
 
   slicedData: computed("sortedData.length", function(){
@@ -160,8 +160,8 @@ export default Controller.extend({
     this.notifyPropertyChange("purposeChartData");
   },
 
-  complianceChartData:
-  {
+  complianceChartData: computed(function() {
+    return {
       datasets: [{
         data: [0,0],
         backgroundColor: [
@@ -175,41 +175,45 @@ export default Controller.extend({
         "Not compliant",
         "Compliant"
       ]
-  },
-  barChartOptions: {
-    title:{
-      display: false
-    },
-    legend:{
-      display: false
-    },
-    scales: {
-      yAxes: [{
-        ticks: {
-          beginAtZero:true
-        }
-      }]
     }
-  },
+  }),
+  barChartOptions: computed(function() {
+    return {
+      title:{
+        display: false
+      },
+      legend:{
+        display: false
+      },
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero:true
+          }
+        }]
+      }
+    }
+  }),
 
-  purposeChartData:
-  {
+  purposeChartData: computed(function() {
+    return {
       datasets: [{
         data: [0,0,0],
         backgroundColor: [
-         "#03A9F4", "#00BCD4", "#009688"
-         ],
+          "#03A9F4", "#00BCD4", "#009688"
+        ],
         label: "Violations per purpose"
       }],
 
       // These labels appear in the legend and in the tooltips when hovering different arcs
       labels: ["Lifestyle recommendations", "Nutrition recommendations", "Activities recommendations"]
-  },
-  pieChartOptions: {
-    title:{
-      display: false
     }
-  }
-
-
+  }),
+  pieChartOptions: computed(function() {
+    return {
+      title:{
+        display: false
+      }
+    }
+  })
 });

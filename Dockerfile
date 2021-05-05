@@ -1,4 +1,4 @@
-FROM madnificent/ember:3.3.0 as ember
+FROM madnificent/ember:2.18.0 as ember
 
 MAINTAINER Arnaud SJongers <arnaud.sjongers@tenforce.com>
 
