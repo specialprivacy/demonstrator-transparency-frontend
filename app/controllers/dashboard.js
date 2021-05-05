@@ -121,7 +121,7 @@ export default Controller.extend({
       return true;
     })
   }),
-  
+
   dataSorting: computed(function(){
     return ["timestamp:desc", "message:asc"];
   }),
@@ -137,13 +137,12 @@ export default Controller.extend({
     // update pie chart
     if(!record.get("hasConsent")){
       // update nok count
-      this.get("complianceChartData.datasets")[0].data[0] = this.get("complianceChartData.datasets")[0].data[0] + 1;
+      this.set("notCompliantCount", this.get("notCompliantCount") + 1);
     }
     else {
       // update ok count
-      this.get("complianceChartData.datasets")[0].data[1] = this.get("complianceChartData.datasets")[0].data[1] + 1;
+      this.set("compliantCount", this.get("compliantCount") + 1);
     }
-    this.notifyPropertyChange("complianceChartData");
 
     // update bar char
     switch(record.get("purpose")){
@@ -160,10 +159,13 @@ export default Controller.extend({
     this.notifyPropertyChange("purposeChartData");
   },
 
-  complianceChartData: computed(function() {
+  notCompliantCount: 0,
+  compliantCount: 0,
+
+  complianceChartData: computed("notCompliantCount", "compliantCount", function() {
     return {
       datasets: [{
-        data: [0,0],
+        data: [this.get("notCompliantCount"),this.get("compliantCount")],
         backgroundColor: [
           "#F44336", "#4CAF50"
         ],
